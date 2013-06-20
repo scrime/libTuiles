@@ -1,0 +1,99 @@
+/***************************************************************************
+ *  LoopTuile.cpp
+ *  2012- Florent Berthaut
+ *  ANR INEDIT Project
+ *  This file is part of libTuiles
+ ****************************************************************************/
+
+#include "LoopTuile.hpp"
+
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+LoopTuile::LoopTuile(): OpTuile() {}
+
+LoopTuile::~LoopTuile() {}
+
+
+void LoopTuile::updateWindows() {
+    if(m_children.size()>0) {
+        m_length=m_children[0]->getLength();
+        m_syncWindowSize=m_children[0]->getSyncWindowSize();
+        m_leftOffset=m_children[0]->getLeftOffset();
+        m_rightOffset=m_children[0]->getRightOffset();
+        if(m_parent) {
+            m_parent->updateWindows();
+        }
+        updateProcProperties();
+    }
+}
+
+void LoopTuile::setChild(Tuile* child) {
+    if(m_children.size()>0) {
+        m_children[0]=child;
+    }
+    else {
+        m_children.push_back(child);
+    }
+    m_children[0]->setParent(this);
+    updateProcChildren();
+    updateWindows();
+}
+
+
+void LoopTuile::print(const std::string& prefix) {
+    cout<<prefix<<"loop "<<m_name<<" "<<m_id<<endl;
+	vector<Tuile*>::iterator itChild = m_children.begin();
+	for(;itChild!=m_children.end();++itChild) {
+		(*itChild)->print(prefix+" ");
+	}
+}
+
+void LoopTuile::processPos(const float& pos, const Voice& voice) {
+    Tuile::processPos(pos, voice);
+    if(m_procChildren.size()>0) {
+        //read within sync window
+        if(pos>m_procLength-m_procRightOffset) { 
+            m_procPosition=m_procLeftOffset;
+        }else {
+            m_procPosition=pos;
+        }
+
+        float childPos = fmod(pos-m_procLeftOffset, 
+                                m_procSyncSize)
+                       + m_procLeftOffset;
+     
+        float loopPos = childPos + m_children[0]->m_procSyncSize;
+
+        //TODO take polyphony into account
+
+        //process previous instances
+        Voice newVoice = voice;
+        while(loopPos<m_children[0]->getLength()) {
+            newVoice.editID()+="L";
+            newVoice.editDistance()+=1;
+            m_children[0]->processPos(loopPos, newVoice);
+            loopPos+=m_children[0]->m_procSyncSize;
+        }
+        //process next instances
+        newVoice = voice;
+        loopPos = childPos - m_children[0]->m_procSyncSize;
+        while(loopPos>0) {
+            newVoice.editID()+="R";
+            newVoice.editDistance()+=1;
+            m_children[0]->processPos(loopPos, newVoice);
+            loopPos-=m_children[0]->m_procSyncSize;
+        }
+        //process current instance
+        newVoice = voice;
+        newVoice.editID()+="C";
+        m_procChildren[0]->processPos(childPos, newVoice);
+    }
+}
+
+float LoopTuile::getChildPositionAtPos(const unsigned int& child, 
+                                        const float& pos) {
+    return pos;
+}
