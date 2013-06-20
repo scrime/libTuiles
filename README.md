@@ -1,4 +1,4 @@
 libTuiles
 =========
 
-libTuiles is a library for creation, manipulation and execution of tiled temporal patterns 
+libTuiles is a library for the creation, manipulation and execution of tiled temporal patterns 
