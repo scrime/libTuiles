@@ -11,7 +11,7 @@
 
 #include "OpTuile.hpp"
 
-#include "commands/CommandsHandler.hpp"
+#include "CommandsHandler.hpp"
 #include "commands/SetProcProperties.hpp"
 #include "commands/SetProcParent.hpp"
 #include "commands/UpdateTuilePosition.hpp"
@@ -64,17 +64,18 @@ void Tuile::setLength(const float& length) {
 }
 
 void Tuile::setSpeed(const float& s) {
-
-
+    m_speed=s;
     updateWindows();
 }
 
 void Tuile::resyncLeft() {
+    //TODO
 
     updateWindows();
 }
 
 void Tuile::resyncRight() {
+    //TODO
 
     updateWindows();
 }
@@ -124,7 +125,7 @@ void Tuile::processPosDiff(const float& diff) {
 
 void Tuile::processPos(const float& pos, const Voice& voice) {
     if(!m_procMuted) {
-        m_procPosition=pos;
+        m_procPosition=pos*m_speed;
         if(m_procPosition>0 && m_procPosition<m_length && !m_active) {
             m_active=true;
             activate();

@@ -9,7 +9,7 @@
 
 #include <iostream>
 
-#include "commands/CommandsHandler.hpp"
+#include "CommandsHandler.hpp"
 #include "commands/SetProcChildren.hpp"
 
 using namespace std;

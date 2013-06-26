@@ -14,7 +14,7 @@
 
 class StartTrees: public Command {	
 	public:
-		inline StartTrees(){}
+		inline StartTrees(){m_name="StartTrees";}
 		inline virtual ~StartTrees(){};
 		virtual void run() {
             m_manager->m_procPlaying=true;

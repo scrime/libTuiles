@@ -34,7 +34,7 @@ Command* Command::popClone() {
         m_clones.pop_front();
     }
     else {
-        cout<<"Unable to pop command"<<endl;
+        cout<<"Unable to pop command "<<m_name<<endl;
     }
     return com;
 }

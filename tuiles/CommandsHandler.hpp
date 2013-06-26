@@ -13,7 +13,7 @@
 
 #include <jack/ringbuffer.h>
 
-#include "../commands/Command.hpp"
+#include "Command.hpp"
 
 class CommandsHandler {
 	public:

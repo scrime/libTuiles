@@ -12,7 +12,7 @@
 
 class SetProcChildren: public Command{	
 	public:
-		inline SetProcChildren(){}
+		inline SetProcChildren(){m_name="SetProcChildren";}
 		inline virtual ~SetProcChildren(){};
 		virtual void run() {
             m_opTuile->m_procChildren.assign(m_children.begin(), 

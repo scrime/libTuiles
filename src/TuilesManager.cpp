@@ -14,7 +14,7 @@
 #include "SeqTuile.hpp"
 #include "SwitchTuile.hpp"
 
-#include "commands/CommandsHandler.hpp"
+#include "CommandsHandler.hpp"
 #include "commands/StartTrees.hpp"
 #include "commands/StopTrees.hpp"
 #include "commands/UpdatePlayPosition.hpp"

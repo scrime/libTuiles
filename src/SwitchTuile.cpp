@@ -65,7 +65,7 @@ void SwitchTuile::processPos(const float& pos, const Voice& voice) {
     Tuile::processPos(pos, voice);
     if(!m_muted) {
         //process only the activated child
-        m_selectedChild->processPos(pos, voice);
+        m_selectedChild->processPos(m_position, voice);
     }
 }
 

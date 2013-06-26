@@ -12,7 +12,7 @@
 
 class SetProcProperties: public Command {
 	public:
-		inline SetProcProperties(){}
+		inline SetProcProperties(){m_name="SetProcProperties";}
 		inline virtual ~SetProcProperties(){};
 		virtual void run() {
             m_tuile->m_procLength=m_length;

@@ -42,8 +42,6 @@ class TuilesManager: public OpTuile {
         void addMonitor(MonitorTuile*);
         void addSeq(SeqTuile*); 
         
-        //TODO addTuilePrototype(string name, Tuile*) 
-
         void removeTuile(Tuile*);
 
         void update();

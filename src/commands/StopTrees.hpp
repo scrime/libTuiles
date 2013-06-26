@@ -13,7 +13,7 @@
 
 class StopTrees: public Command {
 	public:
-		inline StopTrees(){}
+		inline StopTrees(){m_name="StopTrees";}
 		inline virtual ~StopTrees(){};
 		virtual void run() {
             m_manager->m_procPlaying=false;

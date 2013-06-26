@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <list>
+#include <string>
 
 class Command {	
 	public:
@@ -24,6 +25,7 @@ class Command {
         Command* popClone();
 
 	protected:
+        std::string m_name;
         std::list<Command*> m_clones;
         Command* m_model;
         void pushClone(Command*);

@@ -42,6 +42,9 @@ int main(int argc, char* argv) {
     cout<<"SeqTuile created"<<endl;
     man->printTrees();
 
+    //We reduce the speed of this sequence
+    seq->setSpeed(0.5);
+
     //We loop over this sequence
     LoopTuile* loop = new LoopTuile();
     man->addLoop(loop);

@@ -61,7 +61,7 @@ void LoopTuile::processPos(const float& pos, const Voice& voice) {
             m_procPosition=pos;
         }
 
-        float childPos = fmod(pos-m_procLeftOffset, 
+        float childPos = fmod(m_position-m_procLeftOffset, 
                                 m_procSyncSize)
                        + m_procLeftOffset;
      

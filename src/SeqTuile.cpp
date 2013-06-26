@@ -66,8 +66,10 @@ void SeqTuile::processPos(const float& pos, const Voice& voice) {
     Tuile::processPos(pos, voice);
     if(m_procChildren.size()>=2) { 
         if(m_procChildren[0] && m_procChildren[1]) {
-            m_procChildren[0]->processPos(getChildPositionAtPos(0, pos), voice);
-            m_procChildren[1]->processPos(getChildPositionAtPos(1, pos), voice);
+            m_procChildren[0]->processPos(getChildPositionAtPos(0, m_position), 
+                                            voice);
+            m_procChildren[1]->processPos(getChildPositionAtPos(1, m_position), 
+                                            voice);
         }
     }
 }

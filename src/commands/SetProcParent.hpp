@@ -12,7 +12,7 @@
 
 class SetProcParent: public Command{	
 	public:
-		inline SetProcParent(){}
+		inline SetProcParent(){m_name="SetProcParent";}
 		inline virtual ~SetProcParent(){};
 		virtual void run() {
             m_tuile->m_procParent=m_parent;

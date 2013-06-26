@@ -74,6 +74,12 @@ class Tuile {
         inline OpTuile* getParent(){return m_parent;}
         void setParent(OpTuile* parent);
 
+        //commands handlers
+        inline CommandsHandler* getCommandsToProc(){return m_commandsToProc;}
+        inline CommandsHandler* getCommandsFromProc() {
+            return m_commandsFromProc;
+        }
+
         //load and save
         virtual void load(xmlNodePtr node);
         virtual void save(xmlNodePtr parentNode);

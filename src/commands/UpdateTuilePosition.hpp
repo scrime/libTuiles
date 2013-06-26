@@ -13,7 +13,7 @@
 
 class UpdateTuilePosition: public Command {	
 	public:
-		inline UpdateTuilePosition(){}
+		inline UpdateTuilePosition(){m_name="UpdateTuilePosition";}
 		inline virtual ~UpdateTuilePosition(){};
 		virtual void run() {
             m_tuile->m_position = m_tuilePos;
