@@ -11,6 +11,8 @@
 
 using namespace std;
 
+namespace tuiles {
+
 SeqTuile::SeqTuile(): OpTuile() {}
 
 SeqTuile::~SeqTuile() {}
@@ -85,4 +87,5 @@ float SeqTuile::getChildPositionAtPos(const unsigned int& child,
     }
 }
 
+}
 

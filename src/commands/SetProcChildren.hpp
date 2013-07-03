@@ -10,7 +10,9 @@
 
 #include "Command.hpp"
 
-class SetProcChildren: public Command{	
+namespace tuiles {
+
+class SetProcChildren: public Command {	
 	public:
 		inline SetProcChildren(){m_name="SetProcChildren";}
 		inline virtual ~SetProcChildren(){};
@@ -33,6 +35,8 @@ class SetProcChildren: public Command{
         OpTuile* m_opTuile; 
         std::vector<Tuile*> m_children;
 };
+
+}
 
 #endif
 

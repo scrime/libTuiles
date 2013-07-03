@@ -12,6 +12,8 @@
 
 #include "OpTuile.hpp"
 
+namespace tuiles {
+
 class SwitchTuile: public OpTuile {
     public:
         SwitchTuile();
@@ -31,6 +33,7 @@ class SwitchTuile: public OpTuile {
         unsigned int m_selectedChildNum;
 };
 
+}
 
 #endif
 

@@ -15,6 +15,8 @@
 
 #include "Command.hpp"
 
+namespace tuiles {
+
 class CommandsHandler {
 	public:
 		CommandsHandler();
@@ -25,12 +27,12 @@ class CommandsHandler {
         inline Command* popCommand(const std::string& name) { 
             Command* resCom=NULL;
             if(m_commandsMap.find(name)==m_commandsMap.end()) {
-                std::cout<<"Unknown command "<<name<<std::endl;
+                DEBUG("Unknown command "<<name);
                 return NULL;
             } else {
                 resCom = m_commandsMap[name]->popClone();
                 if(!resCom) {
-                    std::cout<<"Could not pop command "<<name<<std::endl;
+                    DEBUG("Could not pop command "<<name);
                 }
             }
             return resCom;
@@ -50,6 +52,6 @@ class CommandsHandler {
 		jack_ringbuffer_t*  m_cleanRingBuffer;
 };
 
-
+}
 
 #endif

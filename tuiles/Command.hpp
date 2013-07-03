@@ -12,6 +12,8 @@
 #include <list>
 #include <string>
 
+namespace tuiles {
+
 class Command {	
 	public:
 		Command();
@@ -30,6 +32,8 @@ class Command {
         Command* m_model;
         void pushClone(Command*);
 };
+
+}
 
 #endif
 

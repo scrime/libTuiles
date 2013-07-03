@@ -1,15 +1,15 @@
 /***************************************************************************
- *            CommandsHandler.cpp
- *
- *  2012 Florent Berthaut
+ *  CommandsHandler.cpp
+ *  2012- Florent Berthaut
  *  ANR INEDIT Project
- *
  *  This file is part of libTuiles
  ****************************************************************************/
 
 #include "CommandsHandler.hpp"
 
 using namespace std;
+
+namespace tuiles {
 
 CommandsHandler::CommandsHandler() {
 	Command* command=NULL;
@@ -57,4 +57,5 @@ void CommandsHandler::cleanCommands() {
     }
 }
 
+}
 

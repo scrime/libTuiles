@@ -10,6 +10,8 @@
 
 #include "Command.hpp"
 
+namespace tuiles {
+
 class SetProcParent: public Command{	
 	public:
 		inline SetProcParent(){m_name="SetProcParent";}
@@ -30,6 +32,8 @@ class SetProcParent: public Command{
         Tuile* m_tuile; 
         OpTuile* m_parent; 
 };
+
+}
 
 #endif
 

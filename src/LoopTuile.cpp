@@ -12,10 +12,11 @@
 
 using namespace std;
 
+namespace tuiles {
+
 LoopTuile::LoopTuile(): OpTuile() {}
 
 LoopTuile::~LoopTuile() {}
-
 
 void LoopTuile::updateWindows() {
     if(m_children.size()>0) {
@@ -97,3 +98,6 @@ float LoopTuile::getChildPositionAtPos(const unsigned int& child,
                                         const float& pos) {
     return pos;
 }
+
+}
+

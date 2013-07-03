@@ -10,6 +10,8 @@
 
 #include "Tuile.hpp"
 
+namespace tuiles {
+
 class LeafTuile: public Tuile {
 	
     public:
@@ -21,6 +23,8 @@ class LeafTuile: public Tuile {
     protected: 
 		virtual void updateWindows();
 };
+
+}
 
 #endif
 

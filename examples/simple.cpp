@@ -13,6 +13,7 @@
 #include <tuiles/LoopTuile.hpp>
 
 using namespace std;
+using namespace tuiles;
 
 int main(int argc, char* argv) {
 

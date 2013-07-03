@@ -12,6 +12,8 @@
 
 #include "OpTuile.hpp"
 
+namespace tuiles {
+
 class MonitorTuile: public OpTuile {
     public:
         MonitorTuile();
@@ -22,6 +24,8 @@ class MonitorTuile: public OpTuile {
                                     const float& pos);
 };
 
+
+}
 
 #endif
 

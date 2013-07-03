@@ -15,6 +15,8 @@
 
 #include "OpTuile.hpp"
 
+namespace tuiles {
+
 class Tuile;
 class LeafTuile;
 class LoopTuile;
@@ -95,6 +97,8 @@ class TuilesManager: public OpTuile {
         float m_procPlayingPos;
         UpdatePlayPosition* m_procProtoUpPlayPos;
 };
+
+}
 
 #endif
 

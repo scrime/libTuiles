@@ -10,6 +10,8 @@
 
 #include <string>
 
+namespace tuiles {
+
 class Voice {
     public:
         Voice():m_distance(0){}
@@ -25,6 +27,8 @@ class Voice {
         std::string m_id;
         unsigned int m_distance;
 };
+
+}
 
 #endif
 

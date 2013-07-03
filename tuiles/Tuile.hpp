@@ -15,6 +15,8 @@
 
 #include "Voice.hpp"
 
+namespace tuiles {
+
 class TuilesManager;
 class OpTuile;
 
@@ -98,6 +100,7 @@ class Tuile {
         }
         void updateProcProperties();
 
+        //defined by derived classes in order to work as callbacks
         inline virtual void activate(){}
         inline virtual void deactivate(){}
 
@@ -146,6 +149,8 @@ class Tuile {
         
         OpTuile* m_procParent;
 };
+
+}
 
 #endif
 

@@ -11,6 +11,7 @@
 #include "Command.hpp"
 #include "TuilesManager.hpp"
 
+namespace tuiles {
 
 class StartTrees: public Command {	
 	public:
@@ -31,6 +32,8 @@ class StartTrees: public Command {
 	protected:
         TuilesManager* m_manager;
 };
+
+}
 
 #endif
 

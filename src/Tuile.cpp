@@ -18,6 +18,8 @@
 
 using namespace std;
 
+namespace tuiles {
+
 Tuile::Tuile(): m_active(false), m_muted(false),
                 m_position(0), m_speed(1), m_length(1),
                 m_leftOffset(0), m_rightOffset(0), m_parent(NULL), 
@@ -142,5 +144,7 @@ void Tuile::processPos(const float& pos, const Voice& voice) {
             m_commandsFromProc->runCommand(com);
         }
     }
+}
+
 }
 

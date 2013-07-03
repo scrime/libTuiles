@@ -9,6 +9,8 @@
 
 using namespace std;
 
+namespace tuiles {
+
 SwitchTuile::SwitchTuile(): OpTuile(), m_selectedChild(NULL) {}
 
 SwitchTuile::~SwitchTuile() {}
@@ -74,5 +76,7 @@ float SwitchTuile::getChildPositionAtPos(const unsigned int& child,
     //FIXME 
     //return pos-(m_procLeftOffset-m_procChildren[child]->m_procLeftOffset);
     return pos;
+}
+
 }
 

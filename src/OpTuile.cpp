@@ -14,6 +14,8 @@
 
 using namespace std;
 
+namespace tuiles {
+
 OpTuile::OpTuile(): Tuile() {
     m_protoSetProcChildren = new SetProcChildren();
     m_protoSetProcChildren->createClones(m_nbCommands);
@@ -44,5 +46,7 @@ void OpTuile::updateProcChildren() {
         com->setChildren(m_children);
         m_commandsToProc->runCommand(com);
     }
+}
+
 }
 

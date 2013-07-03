@@ -21,6 +21,8 @@
 
 using namespace std;
 
+namespace tuiles {
+
 TuilesManager::TuilesManager(): OpTuile(), m_nbCommands(50),
                                 m_playing(false), m_idCounter(0),
                                 m_procPlaying(false) {
@@ -186,5 +188,7 @@ void TuilesManager::print(const std::string& prefix) {
     for(; itChild!=m_children.end(); ++itChild) {
         (*itChild)->print(prefix);
     }
+}
+
 }
 

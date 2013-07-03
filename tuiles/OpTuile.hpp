@@ -12,6 +12,8 @@
 
 #include "Tuile.hpp"
 
+namespace tuiles {
+
 class SetProcChildren;
 
 class OpTuile: public Tuile {
@@ -37,6 +39,8 @@ class OpTuile: public Tuile {
     protected: 
         std::vector<Tuile*> m_procChildren;
 };
+
+}
 
 #endif
 

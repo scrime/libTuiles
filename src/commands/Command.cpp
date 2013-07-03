@@ -1,9 +1,7 @@
 /***************************************************************************
- *            Command.cpp
- *
- *  2012 Florent Berthaut
+ *  Command.cpp
+ *  2012- Florent Berthaut
  *  ANR INEDIT Project
- *
  *  This file is part of libTuiles
  ****************************************************************************/
 
@@ -12,6 +10,8 @@
 #include <iostream>
 
 using namespace std;
+
+namespace tuiles {
 
 Command::Command() {}
 
@@ -34,12 +34,15 @@ Command* Command::popClone() {
         m_clones.pop_front();
     }
     else {
-        cout<<"Unable to pop command "<<m_name<<endl;
+        DEBUG("Unable to pop command "<<m_name);
     }
     return com;
 }
 
 void Command::pushClone(Command* com) {
     m_clones.push_back(com);
+}
+
+
 }
 

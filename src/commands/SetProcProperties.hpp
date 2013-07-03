@@ -10,6 +10,8 @@
 
 #include "Command.hpp"
 
+namespace tuiles {
+
 class SetProcProperties: public Command {
 	public:
 		inline SetProcProperties(){m_name="SetProcProperties";}
@@ -46,6 +48,8 @@ class SetProcProperties: public Command {
         bool m_active;
         bool m_muted;
 };
+
+}
 
 #endif
 

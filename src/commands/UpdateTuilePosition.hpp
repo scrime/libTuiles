@@ -11,6 +11,8 @@
 #include "Command.hpp"
 #include "TuilesManager.hpp"
 
+namespace tuiles {
+
 class UpdateTuilePosition: public Command {	
 	public:
 		inline UpdateTuilePosition(){m_name="UpdateTuilePosition";}
@@ -31,6 +33,8 @@ class UpdateTuilePosition: public Command {
         Tuile* m_tuile;
         float m_tuilePos;
 };
+
+}
 
 #endif
 

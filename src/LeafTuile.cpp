@@ -13,6 +13,8 @@
 
 using namespace std;
 
+namespace tuiles {
+
 LeafTuile::LeafTuile(): Tuile() {}
 
 LeafTuile::~LeafTuile() {}
@@ -34,4 +36,5 @@ void LeafTuile::print(const std::string& prefix) {
     cout<<prefix<<"leaf "<<m_name<<" "<<m_id<<endl;
 }
 
+}
 

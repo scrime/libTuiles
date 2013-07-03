@@ -12,6 +12,8 @@
 
 #include "OpTuile.hpp"
 
+namespace tuiles {
+
 class SeqTuile: public OpTuile {
     public:
         SeqTuile();
@@ -27,6 +29,7 @@ class SeqTuile: public OpTuile {
         virtual void print(const std::string&);
 };
 
+}
 
 #endif
 

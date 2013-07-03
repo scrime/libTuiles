@@ -11,6 +11,8 @@
 #include "Command.hpp"
 #include "TuilesManager.hpp"
 
+namespace tuiles {
+
 class StopTrees: public Command {
 	public:
 		inline StopTrees(){m_name="StopTrees";}
@@ -29,6 +31,8 @@ class StopTrees: public Command {
 	protected:
         TuilesManager* m_manager;
 };
+
+}
 
 #endif
 

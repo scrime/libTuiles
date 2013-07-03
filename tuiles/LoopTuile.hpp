@@ -12,6 +12,8 @@
 
 #include "OpTuile.hpp"
 
+namespace tuiles {
+
 class LoopTuile: public OpTuile {
     public:
         LoopTuile();
@@ -28,6 +30,7 @@ class LoopTuile: public OpTuile {
         void print(const std::string&);
 };
 
+}
 
 #endif
 
