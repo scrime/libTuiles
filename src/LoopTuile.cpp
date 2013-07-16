@@ -32,15 +32,7 @@ void LoopTuile::updateWindows() {
 }
 
 void LoopTuile::setChild(Tuile* child) {
-    if(m_children.size()>0) {
-        m_children[0]=child;
-    }
-    else {
-        m_children.push_back(child);
-    }
-    m_children[0]->setParent(this);
-    updateProcChildren();
-    updateWindows();
+    setChildAtPos(0, child);
 }
 
 
@@ -96,6 +88,11 @@ void LoopTuile::processPos(const float& pos, const Voice& voice) {
 
 float LoopTuile::getChildPositionAtPos(const unsigned int& child, 
                                         const float& pos) {
+    return pos;
+}
+
+float LoopTuile::procGetChildPositionAtPos(const unsigned int& child, 
+                                            const float& pos) {
     return pos;
 }
 

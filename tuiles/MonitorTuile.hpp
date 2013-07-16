@@ -18,10 +18,13 @@ class MonitorTuile: public OpTuile {
     public:
         MonitorTuile();
         ~MonitorTuile();
-        void processPos(const float& pos, const Voice& voice);
-		void updateWindows();
         float getChildPositionAtPos(const unsigned int& child, 
                                     const float& pos);
+		void updateWindows();
+
+        void processPos(const float& pos, const Voice& voice);
+        float procGetChildPositionAtPos(const unsigned int& child, 
+                                        const float& pos);
 };
 
 

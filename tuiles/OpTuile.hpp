@@ -20,14 +20,18 @@ class OpTuile: public Tuile {
     public:
         OpTuile();
         virtual ~OpTuile();
-
-		//children
-        unsigned int getNbChildren(){return m_children.size();}
-        void removeChild(Tuile*);
-
-    protected: 
         virtual float getChildPositionAtPos(const unsigned int& child, 
                                             const float& pos)=0;
+		//children
+        unsigned int getNbChildren(){return m_children.size();}
+        const std::vector<Tuile*>& getChildren(){return m_children;}
+        void removeChild(Tuile*);
+        void replaceChild(Tuile* replacedChild, Tuile* replacingChild);
+
+    protected: 
+        void setChildAtPos(const unsigned int&, Tuile* child);
+        virtual float procGetChildPositionAtPos(const unsigned int& child, 
+                                                const float& pos)=0;
         void updateProcChildren();
 
     protected:
@@ -36,7 +40,6 @@ class OpTuile: public Tuile {
         SetProcChildren* m_protoSetProcChildren;
         friend class SetProcChildren;
 
-    protected: 
         std::vector<Tuile*> m_procChildren;
 };
 

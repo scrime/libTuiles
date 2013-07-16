@@ -3,20 +3,20 @@
 import sys
 
 def options(opt):
-        opt.load('compiler_cxx')
+    opt.load('compiler_cxx')
 
 def configure(conf):
-        conf.load('compiler_cxx')
-        conf.env.INCLUDES = ['.', 'tuiles', 
-                            '/usr/include', '/usr/local/include']
-        conf.env.LIB      = ['m', 'xml2', 'jack']
-        conf.env.LIBPATH  = ['.', '/usr/lib', '/usr/local/lib']
-        conf.env.CXXFLAGS = ['-O3', '-Wall'] 
-        conf.env.DEFINES  = ['DEBUG(x)=//x']
+    conf.load('compiler_cxx')
+    conf.env.INCLUDES = ['.', 'tuiles', 
+                        '/usr/include', '/usr/local/include']
+    conf.env.LIB      = ['m', 'xml2', 'jack']
+    conf.env.LIBPATH  = ['.', '/usr/lib', '/usr/local/lib']
+    conf.env.CXXFLAGS = ['-O3', '-Wall'] 
+    conf.env.DEFINES  = ['DEBUG(x)=//x']
 
-        conf.setenv('debug', env=conf.env.derive())
-        conf.env.CXXFLAGS = ['-g', '-Wall']
-        conf.env.DEFINES  = ['DEBUG(x)=std::cout<< x <<std::endl;']
+    conf.setenv('debug', env=conf.env.derive())
+    conf.env.CXXFLAGS = ['-g', '-Wall']
+    conf.env.DEFINES  = ['DEBUG(x)=std::cout<< x <<std::endl;']
 
 def build(bld):
     #COMMANDS
@@ -51,6 +51,6 @@ def build(bld):
 
 from waflib.Build import BuildContext, CleanContext
 class debug(BuildContext): 
-        cmd = 'debug'
-        variant = 'debug' 
+    cmd = 'debug'
+    variant = 'debug' 
 

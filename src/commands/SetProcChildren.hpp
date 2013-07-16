@@ -9,6 +9,7 @@
 #define SetProcChildren_h
 
 #include "Command.hpp"
+#include "OpTuile.hpp"
 
 namespace tuiles {
 
@@ -17,7 +18,7 @@ class SetProcChildren: public Command {
 		inline SetProcChildren(){m_name="SetProcChildren";}
 		inline virtual ~SetProcChildren(){};
 		virtual void run() {
-            m_opTuile->m_procChildren.assign(m_children.begin(), 
+            m_parent->m_procChildren.assign(m_children.begin(), 
                                                 m_children.end());
         }
         virtual void createClones(const unsigned int& nbClones) {
@@ -26,13 +27,13 @@ class SetProcChildren: public Command {
                 m_clones.back()->setModel(this);
             }
         }
-        inline void setOpTuile(OpTuile* opTuile){m_opTuile=opTuile;}
+        inline void setParent(OpTuile* parent){m_parent=parent;}
         inline void setChildren(const std::vector<Tuile*>& children) { 
             m_children.assign(children.begin(), children.end());
         }
 
 	protected:
-        OpTuile* m_opTuile; 
+        OpTuile* m_parent; 
         std::vector<Tuile*> m_children;
 };
 

@@ -8,12 +8,13 @@
 #ifndef Tuile_h
 #define Tuile_h
 
-#include <map>
 #include <string>
+#include <vector>
 
 #include <libxml/tree.h>
 
 #include "Voice.hpp"
+#include "Observer.hpp"
 
 namespace tuiles {
 
@@ -82,6 +83,9 @@ class Tuile {
             return m_commandsFromProc;
         }
 
+        //observers
+        inline void addObserver(Observer* obs){m_observers.push_back(obs);}
+
         //load and save
         virtual void load(xmlNodePtr node);
         virtual void save(xmlNodePtr parentNode);
@@ -99,6 +103,7 @@ class Tuile {
             m_commandsFromProc=ch2;
         }
         void updateProcProperties();
+        void notifyObservers();
 
         //defined by derived classes in order to work as callbacks
         inline virtual void activate(){}
@@ -109,7 +114,6 @@ class Tuile {
 		std::string m_name;
         bool m_active;
         bool m_muted;
-
         float m_position;
         float m_speed;
         float m_length;
@@ -119,6 +123,8 @@ class Tuile {
         float m_absolutePosition;
 
         OpTuile* m_parent;
+
+        std::vector<Observer*> m_observers;
 
         unsigned int m_nbCommands;
         SetProcProperties* m_protoSetProcProperties;
@@ -131,13 +137,11 @@ class Tuile {
         CommandsHandler* m_commandsFromProc;
         friend class TuilesManager;
 
-    protected: 
         friend class SeqTuile;
         friend class LoopTuile;
         friend class SwitchTuile;
         friend class MonitorTuile;
 
-        // process variables
         float m_procLeftOffset;
         float m_procRightOffset;
         float m_procPosition;
@@ -148,6 +152,7 @@ class Tuile {
         bool m_procMuted;
         
         OpTuile* m_procParent;
+        
 };
 
 }

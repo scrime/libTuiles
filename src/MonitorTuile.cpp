@@ -1,21 +1,21 @@
 /***************************************************************************
- *  SwitchTuile.cpp
+ *  MonitorTuile.cpp
  *  2012- Florent Berthaut
  *  ANR INEDIT Project
  *  This file is part of libTuiles
  ****************************************************************************/
 
-#include "SwitchTuile.hpp"
+#include "MonitorTuile.hpp"
 
 using namespace std;
 
 namespace tuiles {
 
-SwitchTuile::SwitchTuile(): OpTuile(), m_selectedChild(NULL) {}
+MonitorTuile::MonitorTuile(): OpTuile(){}
 
-SwitchTuile::~SwitchTuile() {}
+MonitorTuile::~MonitorTuile() {}
 
-void SwitchTuile::updateWindows() {
+void MonitorTuile::updateWindows() {
 /*
     if(m_selectedChild<m_children.size()) {
         m_length=m_children[m_selectedChild]->getLength();
@@ -30,51 +30,24 @@ void SwitchTuile::updateWindows() {
 */
 }
 
-void SwitchTuile::addChild(Tuile* newChild) {
-    m_children.push_back(newChild);
-    selectChild(m_selectedChild);
-    updateWindows();
-
-    //TODO add proc children 
-}
-
-void SwitchTuile::selectChild(const unsigned int& childID) {
-/*
-    if(childID<m_children.size()) {
-        m_selectedChild=child;
-        for(unsigned int c=0;c<m_children.size();++c) {
-            if(c==m_selectedChild) {
-                m_children[c]->unmute();
-            }
-            else {
-                m_children[c]->mute();
-            }
-        }
-        updateWindows();
-    }
-*/
-
-//TODO send SetSelectedChild command
-
-}
-
-void SwitchTuile::selectChild(Tuile* child) {
-
-
-}
-
-void SwitchTuile::processPos(const float& pos, const Voice& voice) {
+void MonitorTuile::processPos(const float& pos, const Voice& voice) {
     Tuile::processPos(pos, voice);
     if(!m_muted) {
-        //process only the activated child
-        m_selectedChild->processPos(m_position, voice);
+
+        //TODO, wait for the condition to be activated, then trigger the tuile
+        
     }
 }
 
-float SwitchTuile::getChildPositionAtPos(const unsigned int& child, 
+float MonitorTuile::getChildPositionAtPos(const unsigned int& child, 
                                                 const float& pos) {
-    //FIXME 
-    //return pos-(m_procLeftOffset-m_procChildren[child]->m_procLeftOffset);
+    //TODO
+    return pos;
+}
+
+float MonitorTuile::procGetChildPositionAtPos(const unsigned int& child, 
+                                                const float& pos) {
+    //TODO
     return pos;
 }
 

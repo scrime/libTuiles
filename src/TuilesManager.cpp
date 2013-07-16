@@ -13,6 +13,7 @@
 #include "LoopTuile.hpp"
 #include "SeqTuile.hpp"
 #include "SwitchTuile.hpp"
+#include "MonitorTuile.hpp"
 
 #include "CommandsHandler.hpp"
 #include "commands/StartTrees.hpp"
@@ -23,10 +24,9 @@ using namespace std;
 
 namespace tuiles {
 
-TuilesManager::TuilesManager(): OpTuile(), m_nbCommands(50),
+TuilesManager::TuilesManager(): OpTuile(), 
                                 m_playing(false), m_idCounter(0),
                                 m_procPlaying(false) {
-    m_name="Manager";
     //create commands handlers
     m_commandsToProc = new CommandsHandler();
     m_commandsFromProc = new CommandsHandler();
@@ -86,6 +86,46 @@ void TuilesManager::stopTrees() {
     }
 }
 
+void TuilesManager::processPos(const float& pos, const Voice& voice) {
+    for(unsigned int ch=0; ch<m_procChildren.size(); ++ch) {
+        m_procChildren[ch]->processPos(
+                                procGetChildPositionAtPos(ch, pos), voice);
+    }
+}
+
+void TuilesManager::updateWindows() {
+    float left=0;
+    vector<Tuile*>::iterator itChild=m_children.begin();
+    for(; itChild!=m_children.end(); ++itChild) {
+        if((*itChild)->getLeftOffset()>left) {
+            left=(*itChild)->getLeftOffset();
+        }
+    }
+    m_leftOffset=left;
+    //FIXME do we need the other attributes ? how do we compute them ?
+    notifyObservers();
+}
+
+float TuilesManager::getChildPositionAtPos(const unsigned int& child, 
+                                            const float& pos) {
+    if(child<m_children.size()) {
+            return pos+m_children[child]->m_leftOffset;
+    }
+    else {
+        return 0;
+    }
+}
+
+float TuilesManager::procGetChildPositionAtPos(const unsigned int& child, 
+                                                const float& pos) {
+    if(child<m_procChildren.size()) {
+            return pos+m_procChildren[child]->m_procLeftOffset;
+    }
+    else {
+        return 0;
+    }
+}
+
 void TuilesManager::processTrees(const float& posDiff) {
     //handle commands
     m_commandsToProc->runCommands();
@@ -93,10 +133,7 @@ void TuilesManager::processTrees(const float& posDiff) {
 
     //process trees
     if(m_procPlaying) {
-        vector<Tuile*>::iterator itTrees=m_children.begin();
-        for(; itTrees!=m_children.end(); ++itTrees) {
-            (*itTrees)->processPos(m_procPlayingPos, m_procVoice);
-        }
+        processPos(m_procPlayingPos, m_procVoice);
         UpdatePlayPosition* com = static_cast<UpdatePlayPosition*>( 
                                         m_procProtoUpPlayPos->popClone());
         if(com) {    
@@ -131,9 +168,6 @@ void TuilesManager::removeTuile(Tuile* tuile) {
 
 void TuilesManager::addLeaf(LeafTuile* leaf) {
     internalAddTuile(leaf);
-
-    //TODO send command to add the tuile to the trees
-
 }
 
 void TuilesManager::addLoop(LoopTuile* loop) {
@@ -142,15 +176,21 @@ void TuilesManager::addLoop(LoopTuile* loop) {
 
 void TuilesManager::addSwitch(SwitchTuile* sw) {
     internalAddTuile(sw);
-
 }
 
 void TuilesManager::addMonitor(MonitorTuile* mon) {
-
+    internalAddTuile(mon);
 }
 
 void TuilesManager::addSeq(SeqTuile* seq) {
     internalAddTuile(seq);
+}
+
+void TuilesManager::insertSeq(SeqTuile* seq, Tuile* t1, Tuile* t2) {
+    OpTuile* t1Parent = t1->getParent();
+    t1Parent->replaceChild(t1, seq);
+    seq->setFirstChild(t1);
+    seq->setSecondChild(t2);
 }
 
 void TuilesManager::internalAddTuile(Tuile* tuile) {

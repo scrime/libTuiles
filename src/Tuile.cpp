@@ -45,14 +45,14 @@ void Tuile::mute() {
 }
 
 void Tuile::setLeftOffset(const float& lo) {
-    if(lo-m_rightOffset>0) {
+    if(lo+m_rightOffset<m_length) {
         m_leftOffset=lo;
         updateWindows();
     }
 }
 
 void Tuile::setRightOffset(const float& ro) {
-    if(m_leftOffset+ro>0) {
+    if(m_leftOffset+ro<m_length) {
         m_rightOffset=ro;
         updateWindows();
     }
@@ -83,9 +83,6 @@ void Tuile::resyncRight() {
 }
 
 void Tuile::setParent(OpTuile* parent) {
-    if(m_parent!=NULL) {
-        m_parent->removeChild(this);
-    }
     m_parent=parent;
     SetProcParent* com = static_cast<SetProcParent*>(
                                         m_protoSetProcParent->popClone());
@@ -110,6 +107,14 @@ void Tuile::updateProcProperties() {
         com->setMuted(m_muted);
         m_commandsToProc->runCommand(com);
     }
+    notifyObservers();
+}
+
+void Tuile::notifyObservers() {
+    vector<Observer*>::iterator itObs = m_observers.begin();
+    for(; itObs!=m_observers.end(); ++itObs) {
+        (*itObs)->notify();
+    }
 }
 
 void Tuile::load(xmlNodePtr node) {
@@ -128,13 +133,15 @@ void Tuile::processPosDiff(const float& diff) {
 void Tuile::processPos(const float& pos, const Voice& voice) {
     if(!m_procMuted) {
         m_procPosition=pos*m_speed;
-        if(m_procPosition>0 && m_procPosition<m_length && !m_active) {
-            m_active=true;
+        if(m_procPosition>=0 && m_procPosition<m_length && !m_procActive) {
+            m_procActive=true;
             activate();
+            DEBUG("Activate tuile "<<m_id<<" "<<m_name);
         }
-        if((m_procPosition<0 || m_procPosition<m_length) && m_active) {
-            m_active=false;
+        if((m_procPosition<0 || m_procPosition>=m_length) && m_procActive) {
+            m_procActive=false;
             deactivate();
+            DEBUG("Deactivate tuile "<<m_id<<" "<<m_name);
         }
         UpdateTuilePosition* com = static_cast<UpdateTuilePosition*>(
                                         m_protoUpdateTuilePos->popClone());

@@ -18,15 +18,18 @@ class SeqTuile: public OpTuile {
     public:
         SeqTuile();
         ~SeqTuile();
-        void processPos(const float& pos, const Voice& voice);
-		void updateWindows();
-        float getChildPositionAtPos(const unsigned int& child, 
-                                    const float& pos);
 
         void setFirstChild(Tuile*);
         void setSecondChild(Tuile*);
-
+        float getChildPositionAtPos(const unsigned int& child, 
+                                    const float& pos);
         virtual void print(const std::string&);
+
+
+        void processPos(const float& pos, const Voice& voice);
+		void updateWindows();
+        float procGetChildPositionAtPos(const unsigned int& child, 
+                                        const float& pos);
 };
 
 }
