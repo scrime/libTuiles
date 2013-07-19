@@ -79,6 +79,10 @@ void TuilesManager::startTrees() {
 
 void TuilesManager::stopTrees() {
     m_playing=false;
+    std::vector<Tuile*>::iterator itTui= m_trees.begin();
+    for(; itTui!=m_trees.end(); ++itTui) {
+        (*itTui)->setActive(false);
+    }
     StopTrees* com = static_cast<StopTrees*>(m_protoStopTrees->popClone());
     if(com) {    
         com->setManager(this);

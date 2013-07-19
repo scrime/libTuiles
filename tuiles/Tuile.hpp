@@ -38,7 +38,7 @@ class Tuile {
 		inline void setName(const std::string& name){m_name=name;}
 
 		//activation
-        void setActive(bool active);
+        virtual void setActive(bool active);
         inline bool getActive(){return m_active;}
 
         //mute

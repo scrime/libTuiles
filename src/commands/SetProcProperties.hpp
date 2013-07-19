@@ -22,8 +22,14 @@ class SetProcProperties: public Command {
             m_tuile->m_procRightOffset=m_rightOffset;
             m_tuile->m_procSyncSize=m_length-(m_rightOffset+m_leftOffset);
             m_tuile->m_procSpeed=m_speed;
-            m_tuile->m_procActive=m_active;
             m_tuile->m_procMuted=m_muted;
+            if(m_active && !m_tuile->m_procActive) {
+                m_tuile->activate();
+            }
+            else if(!m_active && m_tuile->m_procActive) {
+                m_tuile->deactivate();
+            }
+            m_tuile->m_procActive=m_active;
         }
         virtual void createClones(const unsigned int& nbClones) {
             for(unsigned int c=0; c<nbClones; ++c) {

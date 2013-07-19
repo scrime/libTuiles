@@ -25,6 +25,12 @@ OpTuile::~OpTuile() {
     delete m_protoSetProcChildren;
 }
 
+void OpTuile::setActive(bool active) {
+    Tuile::setActive(active);
+    for(unsigned int ind=0; ind<m_children.size(); ++ind) {
+        m_children[ind]->setActive(active);
+    }
+}
 
 void OpTuile::setChildAtPos(const unsigned int& ind, Tuile* child) {
     while(m_children.size()<=ind) {

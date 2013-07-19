@@ -39,6 +39,11 @@ Tuile::~Tuile() {
     delete m_protoUpdateTuilePos;
 }
 
+void Tuile::setActive(bool active) {
+    m_active=active;
+    updateProcProperties();
+}
+
 void Tuile::mute() { 
     m_muted=true;
     updateProcProperties();

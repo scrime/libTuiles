@@ -19,6 +19,7 @@ LeafTuile::LeafTuile(): Tuile() {}
 
 LeafTuile::~LeafTuile() {}
 
+
 void LeafTuile::processPos(const float& pos, const Voice& voice) {
     Tuile::processPos(pos, voice);
 }
