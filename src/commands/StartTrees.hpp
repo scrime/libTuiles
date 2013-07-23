@@ -18,7 +18,6 @@ class StartTrees: public Command {
 		inline StartTrees(){m_name="StartTrees";}
 		inline virtual ~StartTrees(){};
 		virtual void run() {
-            m_manager->m_procPlayingPos=0;
             m_manager->m_procPlaying=true;
         }
         virtual void createClones(const unsigned int& nbClones) {

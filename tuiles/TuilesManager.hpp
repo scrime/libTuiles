@@ -63,6 +63,9 @@ class TuilesManager: public OpTuile {
         /*!Start playing the trees
         */
 		void startTrees();
+        /*!Pause playing the trees
+        */
+		void pauseTrees();
         /*!Stop playing the trees
         */
 		void stopTrees();

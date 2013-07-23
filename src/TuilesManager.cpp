@@ -25,8 +25,9 @@ using namespace std;
 namespace tuiles {
 
 TuilesManager::TuilesManager(): OpTuile(), 
-                                m_playing(false), m_idCounter(0),
-                                m_procPlaying(false) {
+                                m_playing(false), m_playingPos(0), 
+                                m_idCounter(0),
+                                m_procPlaying(false), m_procPlayingPos(0) {
     //create commands handlers
     m_commandsToProc = new CommandsHandler();
     m_commandsFromProc = new CommandsHandler();
@@ -66,7 +67,6 @@ void TuilesManager::loadTrees(xmlNodePtr rootNode) {
 
 void TuilesManager::startTrees() {
     m_playing=true;
-    m_playingPos=0;
     StartTrees* com = static_cast<StartTrees*>(m_protoStartTrees->popClone());
     if(com) {    
         com->setManager(this);
@@ -76,10 +76,12 @@ void TuilesManager::startTrees() {
 }
 
 void TuilesManager::stopTrees() {
+    m_playingPos=0;
     m_playing=false;
     StopTrees* com = static_cast<StopTrees*>(m_protoStopTrees->popClone());
     if(com) {    
         com->setManager(this);
+        com->setResetPosition(true);
         m_commandsToProc->runCommand(com);
     }
     vector<Tuile*>::iterator itChild=m_children.begin();
@@ -87,6 +89,21 @@ void TuilesManager::stopTrees() {
         (*itChild)->setActive(false);
     }
     DEBUG("Stopping trees");
+}
+
+void TuilesManager::pauseTrees() {
+    m_playing=false;
+    StopTrees* com = static_cast<StopTrees*>(m_protoStopTrees->popClone());
+    if(com) {    
+        com->setManager(this);
+        com->setResetPosition(false);
+        m_commandsToProc->runCommand(com);
+    }
+    vector<Tuile*>::iterator itChild=m_children.begin();
+    for(; itChild!=m_children.end(); ++itChild) {
+        (*itChild)->setActive(false);
+    }
+    DEBUG("Pausing trees");
 }
 
 void TuilesManager::processPos(const float& pos, const Voice& voice) {

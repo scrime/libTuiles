@@ -19,6 +19,9 @@ class StopTrees: public Command {
 		inline virtual ~StopTrees(){};
 		virtual void run() {
             m_manager->m_procPlaying=false;
+            if(m_resetPosition) {
+                m_manager->m_procPlayingPos=0;
+            }
         }
         virtual void createClones(const unsigned int& nbClones) {
             for(unsigned int c=0; c<nbClones; ++c) {
@@ -27,9 +30,11 @@ class StopTrees: public Command {
             }
         }
         inline void setManager(TuilesManager* manager){m_manager=manager;}
+        inline void setResetPosition(bool resPos){m_resetPosition=resPos;}
 
 	protected:
         TuilesManager* m_manager;
+        bool m_resetPosition;
 };
 
 }

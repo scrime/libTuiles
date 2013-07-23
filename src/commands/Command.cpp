@@ -33,9 +33,6 @@ Command* Command::popClone() {
         com=m_clones.front();
         m_clones.pop_front();
     }
-    else {
-        DEBUG("Unable to pop command "<<m_name);
-    }
     return com;
 }
 
