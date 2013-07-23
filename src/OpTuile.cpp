@@ -26,6 +26,7 @@ OpTuile::~OpTuile() {
 }
 
 void OpTuile::setActive(bool active) {
+    DEBUG("OpTuile setactive "<<active);
     Tuile::setActive(active);
     for(unsigned int ind=0; ind<m_children.size(); ++ind) {
         m_children[ind]->setActive(active);

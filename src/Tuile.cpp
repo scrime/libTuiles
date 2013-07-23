@@ -40,6 +40,7 @@ Tuile::~Tuile() {
 }
 
 void Tuile::setActive(bool active) {
+    DEBUG("Set Tuile "<<m_id<<" "<<m_name<<" active "<<active);
     m_active=active;
     updateProcProperties();
 }

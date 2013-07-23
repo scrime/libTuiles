@@ -52,11 +52,8 @@ TuilesManager* TuilesManager::getInstance() {
 }
 
 void TuilesManager::saveTrees(xmlNodePtr node) {
-    xmlNodePtr tuilesNode = xmlNewChild(node, NULL, BAD_CAST "Tuiles",NULL);
-    vector<Tuile*>::iterator itTuile=m_trees.begin();
-    for(; itTuile!=m_trees.end(); ++itTuile) {
-        (*itTuile)->save(tuilesNode);
-    }
+    //xmlNodePtr tuilesNode = xmlNewChild(node, NULL, BAD_CAST "Tuiles",NULL);
+    //TODO call save on each of the children
 }
 
 void TuilesManager::loadTrees(xmlNodePtr rootNode) {
@@ -75,19 +72,21 @@ void TuilesManager::startTrees() {
         com->setManager(this);
         m_commandsToProc->runCommand(com);
     }
+    DEBUG("Starting trees");
 }
 
 void TuilesManager::stopTrees() {
     m_playing=false;
-    std::vector<Tuile*>::iterator itTui= m_trees.begin();
-    for(; itTui!=m_trees.end(); ++itTui) {
-        (*itTui)->setActive(false);
-    }
     StopTrees* com = static_cast<StopTrees*>(m_protoStopTrees->popClone());
     if(com) {    
         com->setManager(this);
         m_commandsToProc->runCommand(com);
     }
+    vector<Tuile*>::iterator itChild=m_children.begin();
+    for(; itChild!=m_children.end(); ++itChild) {
+        (*itChild)->setActive(false);
+    }
+    DEBUG("Stopping trees");
 }
 
 void TuilesManager::processPos(const float& pos, const Voice& voice) {
@@ -131,10 +130,6 @@ float TuilesManager::procGetChildPositionAtPos(const unsigned int& child,
 }
 
 void TuilesManager::processTrees(const float& posDiff) {
-    //handle commands
-    m_commandsToProc->runCommands();
-    m_commandsFromProc->cleanCommands();
-
     //process trees
     if(m_procPlaying) {
         processPos(m_procPlayingPos, m_procVoice);
@@ -147,6 +142,10 @@ void TuilesManager::processTrees(const float& posDiff) {
         }
         m_procPlayingPos+=posDiff;
     }
+
+    //handle commands
+    m_commandsToProc->runCommands();
+    m_commandsFromProc->cleanCommands();
 }
 
 void TuilesManager::update() {

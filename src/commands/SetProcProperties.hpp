@@ -25,9 +25,11 @@ class SetProcProperties: public Command {
             m_tuile->m_procMuted=m_muted;
             if(m_active && !m_tuile->m_procActive) {
                 m_tuile->activate();
+                DEBUG("Activate tuile "<<m_tuile->m_id<<" "<<m_tuile->m_name);
             }
             else if(!m_active && m_tuile->m_procActive) {
                 m_tuile->deactivate();
+                DEBUG("Deactivate tuile "<<m_tuile->m_id<<" "<<m_tuile->m_name);
             }
             m_tuile->m_procActive=m_active;
         }
