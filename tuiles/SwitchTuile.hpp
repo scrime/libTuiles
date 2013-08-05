@@ -23,6 +23,9 @@ class SwitchTuile: public OpTuile {
 		void updateWindows();
         float getChildPositionAtPos(const unsigned int& child, 
                                     const float& pos);
+        float procGetChildPositionAtPos(const unsigned int& child, 
+                                    const float& pos);
+        virtual void print(const std::string&);
 
         virtual void addChild(Tuile*);
         void selectChild(const unsigned int&);

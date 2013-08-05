@@ -24,10 +24,10 @@ void LoopTuile::updateWindows() {
         m_syncWindowSize=m_children[0]->getSyncWindowSize();
         m_leftOffset=m_children[0]->getLeftOffset();
         m_rightOffset=m_children[0]->getRightOffset();
+        updateProcProperties();
         if(m_parent) {
             m_parent->updateWindows();
         }
-        updateProcProperties();
     }
 }
 

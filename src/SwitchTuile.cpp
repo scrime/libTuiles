@@ -6,6 +6,7 @@
  ****************************************************************************/
 
 #include "SwitchTuile.hpp"
+#include <iostream>
 
 using namespace std;
 
@@ -22,10 +23,10 @@ void SwitchTuile::updateWindows() {
         m_syncWindowSize=m_children[m_selectedChild]->getSyncWindowSize();
         m_leftOffset=m_children[m_selectedChild]->getLeftOffset();
         m_rightOffset=m_children[m_selectedChild]->getRightOffset();
+        updateProperties();
         if(m_parent) {
             m_parent->updateWindows();
         }
-        updateProperties();
     }
 */
 }
@@ -76,6 +77,21 @@ float SwitchTuile::getChildPositionAtPos(const unsigned int& child,
     //FIXME 
     //return pos-(m_procLeftOffset-m_procChildren[child]->m_procLeftOffset);
     return pos;
+}
+
+float SwitchTuile::procGetChildPositionAtPos(const unsigned int& child, 
+                                                const float& pos) {
+    //FIXME 
+    //return pos-(m_procLeftOffset-m_procChildren[child]->m_procLeftOffset);
+    return pos;
+}
+
+void SwitchTuile::print(const std::string& prefix) {
+    cout<<prefix<<"switch "<<m_id<<" "<<m_name<<endl;
+	vector<Tuile*>::iterator itChild = m_children.begin();
+	for(; itChild!=m_children.end(); ++itChild) {
+		(*itChild)->print(prefix+" ");
+	}
 }
 
 }

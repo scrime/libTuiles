@@ -21,6 +21,7 @@ class MonitorTuile: public OpTuile {
         float getChildPositionAtPos(const unsigned int& child, 
                                     const float& pos);
 		void updateWindows();
+        virtual void print(const std::string&);
 
         void processPos(const float& pos, const Voice& voice);
         float procGetChildPositionAtPos(const unsigned int& child, 

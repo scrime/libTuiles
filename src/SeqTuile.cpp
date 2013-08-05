@@ -27,10 +27,10 @@ void SeqTuile::updateWindows() {
             m_children[0]->getRightOffset()-m_children[1]->getSyncWindowSize());
         m_length=m_syncWindowSize+m_leftOffset+m_rightOffset;
 
+        updateProcProperties();
         if(m_parent) {
             m_parent->updateWindows();
         }
-        updateProcProperties();
     }
 }
 

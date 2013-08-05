@@ -6,6 +6,7 @@
  ****************************************************************************/
 
 #include "MonitorTuile.hpp"
+#include <iostream>
 
 using namespace std;
 
@@ -22,10 +23,10 @@ void MonitorTuile::updateWindows() {
         m_syncWindowSize=m_children[m_selectedChild]->getSyncWindowSize();
         m_leftOffset=m_children[m_selectedChild]->getLeftOffset();
         m_rightOffset=m_children[m_selectedChild]->getRightOffset();
+        updateProperties();
         if(m_parent) {
             m_parent->updateWindows();
         }
-        updateProperties();
     }
 */
 }
@@ -49,6 +50,14 @@ float MonitorTuile::procGetChildPositionAtPos(const unsigned int& child,
                                                 const float& pos) {
     //TODO
     return pos;
+}
+
+void MonitorTuile::print(const std::string& prefix) {
+    cout<<prefix<<"monitor "<<m_id<<" "<<m_name<<endl;
+	vector<Tuile*>::iterator itChild = m_children.begin();
+	for(; itChild!=m_children.end(); ++itChild) {
+		(*itChild)->print(prefix+" ");
+	}
 }
 
 }
