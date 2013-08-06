@@ -154,6 +154,7 @@ void Tuile::processPos(const float& pos, const Voice& voice) {
         if(com) {
             com->setTuile(this);
             com->setTuilePos(m_procPosition);
+            com->setTuileActive(m_procActive);
             m_commandsFromProc->runCommand(com);
         }
     }

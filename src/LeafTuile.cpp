@@ -26,7 +26,6 @@ void LeafTuile::processPos(const float& pos, const Voice& voice) {
 
 void LeafTuile::updateWindows() {
     m_syncWindowSize=m_length-(m_leftOffset+m_rightOffset);
-
     updateProcProperties();
     if(m_parent) {
         m_parent->updateWindows();

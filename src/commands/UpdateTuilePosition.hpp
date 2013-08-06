@@ -19,6 +19,7 @@ class UpdateTuilePosition: public Command {
 		inline virtual ~UpdateTuilePosition(){};
 		virtual void run() {
             m_tuile->m_position = m_tuilePos;
+            m_tuile->m_active = m_active;
         }
         virtual void createClones(const unsigned int& nbClones) {
             for(unsigned int c=0; c<nbClones; ++c) {
@@ -27,11 +28,13 @@ class UpdateTuilePosition: public Command {
             }
         }
         inline void setTuilePos(const float& pos){m_tuilePos=pos;}
+        inline void setTuileActive(const bool& act){m_active=act;}
         inline void setTuile(Tuile* tuile){m_tuile=tuile;}
 
 	protected:
         Tuile* m_tuile;
         float m_tuilePos;
+        bool m_active;
 };
 
 }
