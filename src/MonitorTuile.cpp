@@ -12,7 +12,9 @@ using namespace std;
 
 namespace tuiles {
 
-MonitorTuile::MonitorTuile(): OpTuile(){}
+MonitorTuile::MonitorTuile(): OpTuile(){
+    m_type="Monitor";
+}
 
 MonitorTuile::~MonitorTuile() {}
 

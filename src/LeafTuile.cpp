@@ -15,7 +15,9 @@ using namespace std;
 
 namespace tuiles {
 
-LeafTuile::LeafTuile(): Tuile() {}
+LeafTuile::LeafTuile(): Tuile() {
+    m_type="Leaf";
+}
 
 LeafTuile::~LeafTuile() {}
 

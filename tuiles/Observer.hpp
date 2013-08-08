@@ -8,6 +8,8 @@
 #ifndef Observer_h
 #define Observer_h
 
+#include <libxml/tree.h>
+
 namespace tuiles {
 
 class Observer {	
@@ -15,6 +17,7 @@ class Observer {
 		Observer(){}
 		virtual ~Observer(){}
 		virtual void notify()=0;
+        virtual void save(xmlNodePtr){}
 };
 
 }

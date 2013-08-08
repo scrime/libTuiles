@@ -89,7 +89,7 @@ class Tuile {
 
         //load and save
         virtual void load(xmlNodePtr node);
-        virtual void save(xmlNodePtr parentNode);
+        virtual xmlNodePtr save(xmlNodePtr parentNode);
 
         //print
         virtual void print(const std::string&)=0;
@@ -113,6 +113,7 @@ class Tuile {
     protected:
 		unsigned int m_id;
 		std::string m_name;
+        std::string m_type;
         bool m_active;
         bool m_muted;
         float m_position;

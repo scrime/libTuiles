@@ -14,7 +14,9 @@ using namespace std;
 
 namespace tuiles {
 
-LoopTuile::LoopTuile(): OpTuile() {}
+LoopTuile::LoopTuile(): OpTuile() {
+    m_type="Loop";
+}
 
 LoopTuile::~LoopTuile() {}
 

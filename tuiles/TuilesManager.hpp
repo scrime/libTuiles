@@ -38,9 +38,10 @@ class TuilesManager: public OpTuile {
 		static TuilesManager* getInstance();
 		~TuilesManager();
 
-        virtual void saveTrees(xmlNodePtr node);
-        virtual void loadTrees(xmlNodePtr node);
+        virtual void saveTrees(const std::string& fileName);
+        virtual void loadTrees(const std::string& fileName);
 
+        virtual Tuile* createAndAddTuile(const std::string& type);
         virtual void addLeaf(LeafTuile*);
         virtual void addLoop(LoopTuile*);
         virtual void addSwitch(SwitchTuile*);

@@ -32,6 +32,9 @@ class OpTuile: public Tuile {
 
         void setActive(bool active);
 
+        virtual void load(xmlNodePtr node);
+        virtual xmlNodePtr save(xmlNodePtr parentNode);
+
     protected: 
         void setChildAtPos(const unsigned int&, Tuile* child);
         virtual float procGetChildPositionAtPos(const unsigned int& child, 

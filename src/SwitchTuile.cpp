@@ -12,7 +12,9 @@ using namespace std;
 
 namespace tuiles {
 
-SwitchTuile::SwitchTuile(): OpTuile(), m_selectedChild(NULL) {}
+SwitchTuile::SwitchTuile(): OpTuile(), m_selectedChild(NULL) {
+    m_type="Switch";
+}
 
 SwitchTuile::~SwitchTuile() {}
 

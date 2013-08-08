@@ -65,17 +65,33 @@ TuilesManager* TuilesManager::getInstance() {
     return &instance;
 }
 
-void TuilesManager::saveTrees(xmlNodePtr node) {
-    //xmlNodePtr tuilesNode = xmlNewChild(node, NULL, BAD_CAST "Tuiles",NULL);
-    //TODO call save on each of the children
+void TuilesManager::saveTrees(const std::string& fileName) {
+    xmlDocPtr doc = xmlNewDoc(BAD_CAST "1.0");
+    xmlNodePtr rootNode = xmlNewNode(NULL, BAD_CAST "Tuiles");
+    xmlDocSetRootElement(doc, rootNode);
+    for(unsigned int c=0; c<m_children.size(); ++c) {
+        m_children[c]->save(rootNode);
+    }
+    xmlSaveFormatFileEnc(fileName.c_str(), doc, "UTF-8", 1);
+    xmlFreeDoc(doc);
+    xmlCleanupParser();
 }
 
-void TuilesManager::loadTrees(xmlNodePtr rootNode) {
-
-    //TODO for each child of the rootNode, clone from the prototypes map 
-    //      according to the name
-    //      and load the corresponding node
-
+void TuilesManager::loadTrees(const std::string& fileName) {
+    xmlDocPtr doc = xmlReadFile(fileName.c_str(),NULL,0);
+    if(doc) {
+        xmlNodePtr rootNode = xmlDocGetRootElement(doc);
+        if(rootNode&& string((const char*)rootNode->name).compare("Tuiles")==0){
+            xmlNodePtr curNode;
+            for (curNode = rootNode->children; curNode;
+                                curNode = curNode->next) {
+                Tuile* newTuile = 
+                    createAndAddTuile(string((const char*)curNode->name));
+                newTuile->load(curNode);
+            }
+        }
+        xmlFreeDoc(doc);
+    }
 }
 
 void TuilesManager::startTrees() {
@@ -191,6 +207,29 @@ Tuile* TuilesManager::getTuile(const unsigned int& id) {
     else {
         return NULL;
     }
+}
+
+Tuile* TuilesManager::createAndAddTuile(const std::string& type) {
+    Tuile* newTuile=NULL;
+    if(type.compare("Leaf")==0) {
+        newTuile = new LeafTuile();
+    }
+    else if(type.compare("Seq")==0) {
+        newTuile = new SeqTuile();
+    }
+    else if(type.compare("Switch")==0) {
+        newTuile = new SwitchTuile();
+    }
+    else if(type.compare("Monitor")==0) {
+        newTuile = new MonitorTuile();
+    }
+    else if(type.compare("Loop")==0) {
+        newTuile = new LoopTuile();
+    }
+    if(newTuile) {
+        internalAddTuile(newTuile);
+    }
+    return newTuile;
 }
 
 void TuilesManager::addLeaf(LeafTuile* leaf) {

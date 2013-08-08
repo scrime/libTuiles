@@ -13,7 +13,9 @@ using namespace std;
 
 namespace tuiles {
 
-SeqTuile::SeqTuile(): OpTuile() {}
+SeqTuile::SeqTuile(): OpTuile() {
+    m_type="Seq";
+}
 
 SeqTuile::~SeqTuile() {}
 

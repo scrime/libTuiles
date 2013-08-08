@@ -8,6 +8,7 @@
 #include "OpTuile.hpp"
 
 #include <iostream>
+#include <sstream>
 
 #include "CommandsHandler.hpp"
 #include "commands/SetProcChildren.hpp"
@@ -98,6 +99,31 @@ void OpTuile::recursiveDelete() {
         }
     }
 */
+}
+
+void OpTuile::load(xmlNodePtr node) {
+    Tuile::load(node);
+    //load children
+    
+    updateProcChildren();
+}
+
+xmlNodePtr OpTuile::save(xmlNodePtr parentNode) {
+    //save children first
+    for(unsigned int c=0; c<m_children.size(); ++c) {
+        m_children[c]->save(parentNode);
+    }
+    //save the tuile
+    xmlNodePtr tuileNode = Tuile::save(parentNode);
+    //and the list of children
+    std::string children="";
+    for(unsigned int c=0; c<m_children.size(); ++c) {
+        ostringstream oss;
+        oss<<m_children[c]->getID();
+        children+=oss.str()+";";
+    }
+    xmlNewProp(tuileNode, BAD_CAST "children", BAD_CAST children.c_str()); 
+    return tuileNode;
 }
 
 }

@@ -8,6 +8,7 @@
 #include "Tuile.hpp"
 
 #include <iostream>
+#include <sstream>
 
 #include "OpTuile.hpp"
 
@@ -135,11 +136,28 @@ void Tuile::notifyObservers() {
 }
 
 void Tuile::load(xmlNodePtr node) {
-
 }
 
-void Tuile::save(xmlNodePtr parentNode) {
-
+xmlNodePtr Tuile::save(xmlNodePtr parentNode) {
+    xmlNodePtr tuileNode = 
+                xmlNewChild(parentNode, NULL, BAD_CAST m_type.c_str(), NULL);
+    ostringstream oss, oss1, oss2, oss3, oss4, oss5;
+    oss<<m_id;
+    oss1<<m_length;
+    oss2<<m_leftOffset;
+    oss3<<m_rightOffset;
+    oss4<<m_speed;
+    xmlNewProp(tuileNode, BAD_CAST "id", BAD_CAST oss.str().c_str());
+    xmlNewProp(tuileNode, BAD_CAST "name", BAD_CAST m_name.c_str());
+    xmlNewProp(tuileNode, BAD_CAST "length", BAD_CAST oss1.str().c_str());
+    xmlNewProp(tuileNode, BAD_CAST "left_offset", BAD_CAST oss2.str().c_str());
+    xmlNewProp(tuileNode, BAD_CAST "right_offset", BAD_CAST oss3.str().c_str());
+    xmlNewProp(tuileNode, BAD_CAST "speed", BAD_CAST oss4.str().c_str());
+    vector<Observer*>::iterator itObs = m_observers.begin();
+    for(; itObs!=m_observers.end(); ++itObs) {
+        (*itObs)->save(tuileNode);
+    }
+    return tuileNode;
 }
 
 void Tuile::processPosDiff(const float& diff) {
