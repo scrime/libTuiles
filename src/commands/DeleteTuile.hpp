@@ -1,37 +1,36 @@
 /***************************************************************************
- *  UpdatePlayPosition.hpp
- *  2012- Florent Berthaut
- *  ANR INEDIT Project
+ *  DeleteTuile.hpp
+ *  2012-2013 Florent Berthaut
+ *  ANR INEDIT Project - Florent Berthaut, David Janin
+ *  SCRIME, LaBRI, Université de Bordeaux, France
  *  This file is part of libTuiles
  ****************************************************************************/
 
-#ifndef UpdatePlayPosition_h
-#define UpdatePlayPosition_h
+#ifndef DeleteTuile_h
+#define DeleteTuile_h
 
 #include "Command.hpp"
 #include "TuilesManager.hpp"
 
 namespace tuiles {
 
-class UpdatePlayPosition: public Command {	
+class DeleteTuile: public Command {	
 	public:
-		inline UpdatePlayPosition(){m_name="UpdatePlayPosition";}
-		inline virtual ~UpdatePlayPosition(){};
+		inline DeleteTuile(){m_name="DeleteTuile";}
+		inline virtual ~DeleteTuile(){};
 		virtual void run() {
-            m_manager->m_playingPos=m_playingPos;
+            TuilesManager::getInstance()->internalDeleteTuile(m_tuile);
         }
         virtual void createClones(const unsigned int& nbClones) {
             for(unsigned int c=0; c<nbClones; ++c) {
-                m_clones.push_back(new UpdatePlayPosition());
+                m_clones.push_back(new DeleteTuile());
                 m_clones.back()->setModel(this);
             }
         }
-        inline void setPlayingPos(const float& pos){m_playingPos=pos;}
-        inline void setManager(TuilesManager* manager){m_manager=manager;}
+        inline void setTuile(Tuile* tuile){m_tuile=tuile;}
 
 	protected:
-        TuilesManager* m_manager;
-        float m_playingPos;
+        Tuile* m_tuile;
 };
 
 }

@@ -19,6 +19,7 @@
 #include "commands/StartTrees.hpp"
 #include "commands/StopTrees.hpp"
 #include "commands/UpdatePlayPosition.hpp"
+#include "commands/DeleteTuile.hpp"
 
 using namespace std;
 
@@ -39,12 +40,15 @@ TuilesManager::TuilesManager(): OpTuile(),
     m_protoStopTrees->createClones(m_nbCommands);
     m_procProtoUpPlayPos = new UpdatePlayPosition();
     m_procProtoUpPlayPos->createClones(m_nbCommands);
+    m_protoDeleteTuile= new DeleteTuile();
+    m_protoDeleteTuile->createClones(m_nbCommands);
 }
 
 TuilesManager::~TuilesManager() {
     delete m_protoStartTrees;
     delete m_protoStopTrees;
     delete m_procProtoUpPlayPos;
+    delete m_protoDeleteTuile;
 }
 
 TuilesManager* TuilesManager::getInstance() {
@@ -180,12 +184,6 @@ Tuile* TuilesManager::getTuile(const unsigned int& id) {
     }
 }
 
-void TuilesManager::removeTuile(Tuile* tuile) {
-    //TODO, erase from main trees and map
-
-    //TODO, send command to erase from proc Trees
-}
-
 void TuilesManager::addLeaf(LeafTuile* leaf) {
     internalAddTuile(leaf);
 }
@@ -213,16 +211,8 @@ void TuilesManager::insertSeq(SeqTuile* seq, Tuile* t1, Tuile* t2) {
     seq->setSecondChild(t2);
 }
 
-void TuilesManager::internalAddTuile(Tuile* tuile) {
-    tuile->setID(m_idCounter);
-    tuile->setCommandHandlers(m_commandsToProc, m_commandsFromProc);
-    tuile->setParent(this);
-
-    m_children.push_back(tuile);
-    m_tuilesMap[m_idCounter]=tuile;
-    updateProcChildren();
-
-    m_idCounter++;
+void TuilesManager::deleteTuile(Tuile* tuile) {
+    tuile->getParent()->deleteChild(tuile);
 }
 
 void TuilesManager::clear() {
@@ -238,9 +228,26 @@ void TuilesManager::clear() {
     updateProcChildren();
 }
 
+void TuilesManager::internalAddTuile(Tuile* tuile) {
+    tuile->setID(m_idCounter);
+    tuile->setCommandHandlers(m_commandsToProc, m_commandsFromProc);
+    tuile->setParent(this);
+
+    m_children.push_back(tuile);
+    m_tuilesMap[m_idCounter]=tuile;
+    updateProcChildren();
+
+    m_idCounter++;
+}
+
+void TuilesManager::internalDeleteTuile(Tuile* tuile) {
+    m_tuilesMap.erase(tuile->getID());
+    delete tuile;
+}
+
 void TuilesManager::printTrees() {
     cout<<"TuilesManager: printing trees"<<endl;
-    print("");
+    print(" ");
 }
 
 void TuilesManager::print(const std::string& prefix) {

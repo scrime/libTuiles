@@ -11,6 +11,7 @@
 
 #include "CommandsHandler.hpp"
 #include "commands/SetProcChildren.hpp"
+#include "commands/DeleteTuile.hpp"
 
 using namespace std;
 
@@ -80,6 +81,23 @@ void OpTuile::updateProcChildren() {
         com->setChildren(m_children);
         m_commandsToProc->runCommand(com);
     }
+}
+
+void OpTuile::deleteChild(Tuile* child) {
+    //remove from children
+    updateProcChildren(); 
+
+}
+
+void OpTuile::recursiveDelete() {
+/*
+    for(unsigned int ind=0; ind<m_children.size(); ++ind) {
+        if(m_children[ind]->getID()==replacedChild->getID()) {
+            
+            
+        }
+    }
+*/
 }
 
 }

@@ -28,47 +28,56 @@ class CommandsHandler;
 class StartTrees;
 class StopTrees;
 class UpdatePlayPosition;
+class ClearTreesAsk;
+class ClearTreesConfirm;
+
+class DeleteTuile;
+class ProcDeleteTuile;
 
 class TuilesManager: public OpTuile {	
 	public:
 		static TuilesManager* getInstance();
 		~TuilesManager();
 
-        void saveTrees(xmlNodePtr node);
-        void loadTrees(xmlNodePtr node);
-        void refreshTree();
+        virtual void saveTrees(xmlNodePtr node);
+        virtual void loadTrees(xmlNodePtr node);
 
-        void addLeaf(LeafTuile*);
-        void addLoop(LoopTuile*);
-        void addSwitch(SwitchTuile*);
-        void addMonitor(MonitorTuile*);
-        void addSeq(SeqTuile*); 
+        virtual void addLeaf(LeafTuile*);
+        virtual void addLoop(LoopTuile*);
+        virtual void addSwitch(SwitchTuile*);
+        virtual void addMonitor(MonitorTuile*);
+        virtual void addSeq(SeqTuile*); 
 
         /*!Set t1 and t2 as children of seq and replace t1 in its parent by seq
         */
-        void insertSeq(SeqTuile* seq, Tuile* t1, Tuile* t2);
+        virtual void insertSeq(SeqTuile* seq, Tuile* t1, Tuile* t2);
 
-        /*!Completely removes the tuile from the trees
+        /*!Completely removes the tuile and its children if any
         */
-        void removeTuile(Tuile*);
+        virtual void deleteTuile(Tuile* tuile);
 
         /*!Get position of the child
         */
         float getChildPositionAtPos(const unsigned int& child, 
                                     const float& pos);
 
-        void update();
-        void clear();
+        /*!Update tuiles 
+        */
+        virtual void update();
+
+        /*!Remove all tuiles
+        */
+        virtual void clear();
 
         /*!Start playing the trees
         */
-		void startTrees();
+		virtual void startTrees();
         /*!Pause playing the trees
         */
-		void pauseTrees();
+		virtual void pauseTrees();
         /*!Stop playing the trees
         */
-		void stopTrees();
+		virtual void stopTrees();
 
 		const bool& isPlaying(){return m_playing;}
         const float& getPlayingPos(){return m_playingPos;}
@@ -79,7 +88,6 @@ class TuilesManager: public OpTuile {
         /*!Prints all trees recursively
         */ 
         void printTrees();
-
 
         /*!Process the trees
         *  Advance in the trees by posDiff 
@@ -96,6 +104,7 @@ class TuilesManager: public OpTuile {
 		TuilesManager();
 		Tuile* getTuile(const unsigned int& id);
         void internalAddTuile(Tuile*);
+        void internalDeleteTuile(Tuile*);
         void print(const std::string&);
 
         //inherited methods
@@ -107,6 +116,9 @@ class TuilesManager: public OpTuile {
         friend class StartTrees;
         friend class StopTrees;
         friend class UpdatePlayPosition;
+        friend class ClearTreesAsk;
+        friend class ClearTreesConfirm;
+        friend class DeleteTuile;
 
         //Main variables
 		bool m_playing;
@@ -114,16 +126,17 @@ class TuilesManager: public OpTuile {
         
         unsigned int m_idCounter;
         std::map<unsigned int, Tuile*> m_tuilesMap;
-        std::vector<Tuile*> m_trees;
         StartTrees* m_protoStartTrees;
         StopTrees* m_protoStopTrees;
+        ClearTreesAsk* m_protoClearTreesAsk;
+        DeleteTuile* m_protoDeleteTuile;
 
         //Proc variables
         Voice m_procVoice;
-        std::vector<Tuile*> m_procTrees;
         bool m_procPlaying;
         float m_procPlayingPos;
         UpdatePlayPosition* m_procProtoUpPlayPos;
+        ClearTreesConfirm* m_protoClearTreesConfirm;
 };
 
 }

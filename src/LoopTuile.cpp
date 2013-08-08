@@ -35,7 +35,6 @@ void LoopTuile::setChild(Tuile* child) {
     setChildAtPos(0, child);
 }
 
-
 void LoopTuile::print(const std::string& prefix) {
     cout<<prefix<<"loop "<<m_name<<" "<<m_id<<endl;
 	vector<Tuile*>::iterator itChild = m_children.begin();

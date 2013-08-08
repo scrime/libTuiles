@@ -15,6 +15,7 @@
 #include "commands/SetProcProperties.hpp"
 #include "commands/SetProcParent.hpp"
 #include "commands/UpdateTuilePosition.hpp"
+#include "commands/DeleteTuile.hpp"
 
 using namespace std;
 
@@ -37,6 +38,16 @@ Tuile::~Tuile() {
     delete m_protoSetProcProperties;
     delete m_protoSetProcParent;
     delete m_protoUpdateTuilePos;
+}
+
+void Tuile::recursiveDelete() {
+/*
+    DeleteTuile* com= static_cast<DeleteTuile*>(m_protoDeleteTuile->popClone());
+    if(com) {    
+        com->setTuile(this);
+        m_commandsToProc->runCommand(com);
+    }
+*/
 }
 
 void Tuile::setActive(bool active) {

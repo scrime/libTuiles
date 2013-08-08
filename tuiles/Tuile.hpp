@@ -30,6 +30,7 @@ class Tuile {
     public:
         Tuile();
         virtual ~Tuile();
+        void recursiveDelete();
 
 		//id and name
         inline void setID(const unsigned int& id){m_id=id;}
@@ -133,6 +134,7 @@ class Tuile {
         friend class SetProcParent;
         UpdateTuilePosition* m_protoUpdateTuilePos;
         friend class UpdateTuilePosition;
+
         CommandsHandler* m_commandsToProc;
         CommandsHandler* m_commandsFromProc;
         friend class TuilesManager;
