@@ -30,7 +30,6 @@ class StopTrees;
 class UpdatePlayPosition;
 class ClearTreesAsk;
 class ClearTreesConfirm;
-
 class DeleteTuile;
 class ProcDeleteTuile;
 
@@ -67,7 +66,7 @@ class TuilesManager: public OpTuile {
 
         /*!Remove all tuiles
         */
-        virtual void clear();
+        virtual void clearTrees();
 
         /*!Start playing the trees
         */
@@ -105,6 +104,10 @@ class TuilesManager: public OpTuile {
 		Tuile* getTuile(const unsigned int& id);
         void internalAddTuile(Tuile*);
         void internalDeleteTuile(Tuile*);
+
+        virtual void procClearTrees();
+        virtual void confirmClearTrees();
+
         void print(const std::string&);
 
         //inherited methods
@@ -136,7 +139,7 @@ class TuilesManager: public OpTuile {
         bool m_procPlaying;
         float m_procPlayingPos;
         UpdatePlayPosition* m_procProtoUpPlayPos;
-        ClearTreesConfirm* m_protoClearTreesConfirm;
+        ClearTreesConfirm* m_procProtoClearTreesConfirm;
 };
 
 }

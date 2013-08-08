@@ -1,28 +1,28 @@
 /***************************************************************************
- *  StartTrees.hpp
+ *  ClearTreesConfirm.hpp
  *  2012- Florent Berthaut
  *  ANR INEDIT Project
  *  This file is part of libTuiles
  ****************************************************************************/
 
-#ifndef StartTrees_h
-#define StartTrees_h
+#ifndef ClearTreesConfirm_h
+#define ClearTreesConfirm_h
 
 #include "Command.hpp"
 #include "TuilesManager.hpp"
 
 namespace tuiles {
 
-class StartTrees: public Command {	
+class ClearTreesConfirm: public Command {	
 	public:
-		inline StartTrees(){m_name="StartTrees";}
-		inline virtual ~StartTrees(){};
+		inline ClearTreesConfirm(){m_name="ClearTreesConfirm";}
+		inline virtual ~ClearTreesConfirm(){};
 		virtual void run() {
-            m_manager->m_procPlaying=true;
+            m_manager->confirmClearTrees();
         }
         virtual void createClones(const unsigned int& nbClones) {
             for(unsigned int c=0; c<nbClones; ++c) {
-                m_clones.push_back(new StartTrees());
+                m_clones.push_back(new ClearTreesConfirm());
                 m_clones.back()->setModel(this);
             }
         }

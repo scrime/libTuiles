@@ -20,6 +20,8 @@
 #include "commands/StopTrees.hpp"
 #include "commands/UpdatePlayPosition.hpp"
 #include "commands/DeleteTuile.hpp"
+#include "commands/ClearTreesAsk.hpp"
+#include "commands/ClearTreesConfirm.hpp"
 
 using namespace std;
 
@@ -38,10 +40,15 @@ TuilesManager::TuilesManager(): OpTuile(),
     m_protoStartTrees->createClones(m_nbCommands);
     m_protoStopTrees = new StopTrees();
     m_protoStopTrees->createClones(m_nbCommands);
-    m_procProtoUpPlayPos = new UpdatePlayPosition();
-    m_procProtoUpPlayPos->createClones(m_nbCommands);
     m_protoDeleteTuile= new DeleteTuile();
     m_protoDeleteTuile->createClones(m_nbCommands);
+    m_protoClearTreesAsk = new ClearTreesAsk();
+    m_protoClearTreesAsk->createClones(m_nbCommands);
+
+    m_procProtoUpPlayPos = new UpdatePlayPosition();
+    m_procProtoUpPlayPos->createClones(m_nbCommands);
+    m_procProtoClearTreesConfirm = new ClearTreesConfirm();
+    m_procProtoClearTreesConfirm->createClones(m_nbCommands);
 }
 
 TuilesManager::~TuilesManager() {
@@ -49,6 +56,8 @@ TuilesManager::~TuilesManager() {
     delete m_protoStopTrees;
     delete m_procProtoUpPlayPos;
     delete m_protoDeleteTuile;
+    delete m_protoClearTreesAsk;
+    delete m_procProtoClearTreesConfirm;
 }
 
 TuilesManager* TuilesManager::getInstance() {
@@ -215,17 +224,33 @@ void TuilesManager::deleteTuile(Tuile* tuile) {
     tuile->getParent()->deleteChild(tuile);
 }
 
-void TuilesManager::clear() {
-    m_idCounter=0;
-
+void TuilesManager::clearTrees() {
     m_children.clear();
+    updateProcChildren();
+    ClearTreesAsk* com = 
+        static_cast<ClearTreesAsk*>(m_protoClearTreesAsk->popClone());
+    if(com) {    
+        com->setManager(this);
+        m_commandsToProc->runCommand(com);
+    }
+}
+
+void TuilesManager::procClearTrees() {
+    ClearTreesConfirm* com = static_cast<ClearTreesConfirm*>(
+                                m_procProtoClearTreesConfirm->popClone());
+    if(com) {    
+        com->setManager(this);
+        m_commandsFromProc->runCommand(com);
+    }
+}
+
+void TuilesManager::confirmClearTrees() {
+    m_idCounter=0;
     map<unsigned int, Tuile*>::iterator itChild=m_tuilesMap.begin();
     for(; itChild!=m_tuilesMap.end(); ++itChild) {
         delete (itChild->second);
     }
     m_tuilesMap.clear();
-
-    updateProcChildren();
 }
 
 void TuilesManager::internalAddTuile(Tuile* tuile) {

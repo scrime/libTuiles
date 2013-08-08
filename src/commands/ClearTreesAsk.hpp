@@ -1,28 +1,28 @@
 /***************************************************************************
- *  StartTrees.hpp
+ *  ClearTreesAsk.hpp
  *  2012- Florent Berthaut
  *  ANR INEDIT Project
  *  This file is part of libTuiles
  ****************************************************************************/
 
-#ifndef StartTrees_h
-#define StartTrees_h
+#ifndef ClearTreesAsk_h
+#define ClearTreesAsk_h
 
 #include "Command.hpp"
 #include "TuilesManager.hpp"
 
 namespace tuiles {
 
-class StartTrees: public Command {	
+class ClearTreesAsk: public Command {	
 	public:
-		inline StartTrees(){m_name="StartTrees";}
-		inline virtual ~StartTrees(){};
+		inline ClearTreesAsk(){m_name="ClearTreesAsk";}
+		inline virtual ~ClearTreesAsk(){};
 		virtual void run() {
-            m_manager->m_procPlaying=true;
+            m_manager->procClearTrees();
         }
         virtual void createClones(const unsigned int& nbClones) {
             for(unsigned int c=0; c<nbClones; ++c) {
-                m_clones.push_back(new StartTrees());
+                m_clones.push_back(new ClearTreesAsk());
                 m_clones.back()->setModel(this);
             }
         }
