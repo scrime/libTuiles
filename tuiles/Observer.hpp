@@ -17,7 +17,6 @@ class Observer {
 		Observer(){}
 		virtual ~Observer(){}
 		virtual void notify()=0;
-        virtual void save(xmlNodePtr){}
 };
 
 }

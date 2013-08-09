@@ -136,11 +136,37 @@ void Tuile::notifyObservers() {
 }
 
 void Tuile::load(xmlNodePtr node) {
+    char* value=NULL;
+    value=NULL;
+    value = (char*)xmlGetProp(node,(xmlChar*)"m_name"); 
+    if(value) {
+        m_name=value;
+    } 
+    value=NULL;
+    value = (char*)xmlGetProp(node,(xmlChar*)"length"); 
+    if(value) {
+        m_length=atof(value);
+    } 
+    value=NULL;
+    value = (char*)xmlGetProp(node,(xmlChar*)"left_offset"); 
+    if(value) {
+        m_leftOffset=atof(value);
+    } 
+    value=NULL;
+    value = (char*)xmlGetProp(node,(xmlChar*)"right_offset"); 
+    if(value) {
+        m_rightOffset=atof(value);
+    } 
+    value=NULL;
+    value = (char*)xmlGetProp(node,(xmlChar*)"speed"); 
+    if(value) {
+        m_speed=atof(value);
+    } 
 }
 
 xmlNodePtr Tuile::save(xmlNodePtr parentNode) {
-    xmlNodePtr tuileNode = 
-                xmlNewChild(parentNode, NULL, BAD_CAST m_type.c_str(), NULL);
+    xmlNodePtr tuileNode = xmlNewChild(parentNode, NULL, 
+                                        BAD_CAST m_type.c_str(), NULL);
     ostringstream oss, oss1, oss2, oss3, oss4, oss5;
     oss<<m_id;
     oss1<<m_length;
@@ -153,10 +179,6 @@ xmlNodePtr Tuile::save(xmlNodePtr parentNode) {
     xmlNewProp(tuileNode, BAD_CAST "left_offset", BAD_CAST oss2.str().c_str());
     xmlNewProp(tuileNode, BAD_CAST "right_offset", BAD_CAST oss3.str().c_str());
     xmlNewProp(tuileNode, BAD_CAST "speed", BAD_CAST oss4.str().c_str());
-    vector<Observer*>::iterator itObs = m_observers.begin();
-    for(; itObs!=m_observers.end(); ++itObs) {
-        (*itObs)->save(tuileNode);
-    }
     return tuileNode;
 }
 

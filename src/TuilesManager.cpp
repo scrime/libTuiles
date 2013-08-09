@@ -65,35 +65,6 @@ TuilesManager* TuilesManager::getInstance() {
     return &instance;
 }
 
-void TuilesManager::saveTrees(const std::string& fileName) {
-    xmlDocPtr doc = xmlNewDoc(BAD_CAST "1.0");
-    xmlNodePtr rootNode = xmlNewNode(NULL, BAD_CAST "Tuiles");
-    xmlDocSetRootElement(doc, rootNode);
-    for(unsigned int c=0; c<m_children.size(); ++c) {
-        m_children[c]->save(rootNode);
-    }
-    xmlSaveFormatFileEnc(fileName.c_str(), doc, "UTF-8", 1);
-    xmlFreeDoc(doc);
-    xmlCleanupParser();
-}
-
-void TuilesManager::loadTrees(const std::string& fileName) {
-    xmlDocPtr doc = xmlReadFile(fileName.c_str(),NULL,0);
-    if(doc) {
-        xmlNodePtr rootNode = xmlDocGetRootElement(doc);
-        if(rootNode&& string((const char*)rootNode->name).compare("Tuiles")==0){
-            xmlNodePtr curNode;
-            for (curNode = rootNode->children; curNode;
-                                curNode = curNode->next) {
-                Tuile* newTuile = 
-                    createAndAddTuile(string((const char*)curNode->name));
-                newTuile->load(curNode);
-            }
-        }
-        xmlFreeDoc(doc);
-    }
-}
-
 void TuilesManager::startTrees() {
     m_playing=true;
     StartTrees* com = static_cast<StartTrees*>(m_protoStartTrees->popClone());

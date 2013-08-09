@@ -53,7 +53,6 @@ void SeqTuile::print(const std::string& prefix) {
 	}
 }
 
-
 void SeqTuile::processPos(const float& pos, const Voice& voice) {
     Tuile::processPos(pos, voice);
     if(m_procChildren.size()>=2) { 
