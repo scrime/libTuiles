@@ -15,7 +15,7 @@
 using namespace std;
 using namespace tuiles;
 
-int main(int argc, char* argv) {
+int main(int argc, char* argv[]) {
 
     //This example demonstrates the use of threads, of custom tuiles 
     //and of observers
