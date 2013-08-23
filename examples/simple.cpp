@@ -6,6 +6,7 @@
  ****************************************************************************/
 
 #include <iostream>
+#include <unistd.h>
 
 #include <tuiles/TuilesManager.hpp>
 #include <tuiles/LeafTuile.hpp>
@@ -15,7 +16,7 @@
 using namespace std;
 using namespace tuiles;
 
-int main(int argc, char* argv) {
+int main(int argc, char* argv[]) {
 
     //First we get an instance of the TuilesManager
     TuilesManager* man = TuilesManager::getInstance();

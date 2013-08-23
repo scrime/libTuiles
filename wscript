@@ -7,7 +7,7 @@ def options(opt):
 
 def configure(conf):
     conf.load('compiler_cxx')
-    conf.env.INCLUDES = ['.', 'tuiles', 
+    conf.env.INCLUDES = ['.', 'tuiles', '/usr/include/libxml2',
                         '/usr/include', '/usr/local/include']
     conf.env.LIB      = ['m', 'xml2', 'jack']
     conf.env.LIBPATH  = ['.', '/usr/lib', '/usr/local/lib']
