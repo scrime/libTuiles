@@ -25,12 +25,14 @@ class CommandsHandler;
 class SetProcProperties;
 class SetProcParent;
 class UpdateTuilePosition;
+class DeleteTuile;
+class ProcDeleteTuile;
 
 class Tuile { 
     public:
         Tuile();
         virtual ~Tuile();
-        void recursiveDelete();
+        void askDelete();
 
 		//id and name
         inline void setID(const unsigned int& id){m_id=id;}
@@ -105,6 +107,7 @@ class Tuile {
         }
         void updateProcProperties();
         void notifyObservers();
+        void confirmDelete();
 
         //defined by derived classes in order to work as callbacks
         inline virtual void activate(){}
@@ -133,8 +136,13 @@ class Tuile {
         friend class SetProcProperties;
         SetProcParent* m_protoSetProcParent;
         friend class SetProcParent;
+        ProcDeleteTuile* m_protoProcDeleteTuile;
+        friend class ProcDeleteTuile;
+
         UpdateTuilePosition* m_protoUpdateTuilePos;
         friend class UpdateTuilePosition;
+        DeleteTuile* m_protoDeleteTuile;
+        friend class DeleteTuile;
 
         CommandsHandler* m_commandsToProc;
         CommandsHandler* m_commandsFromProc;

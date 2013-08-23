@@ -1,29 +1,29 @@
 /***************************************************************************
- *  DeleteTuile.hpp
+ *  ProcDeleteTuile.hpp
  *  2012-2013 Florent Berthaut
  *  ANR INEDIT Project - Florent Berthaut, David Janin
  *  SCRIME, LaBRI, Université de Bordeaux, France
  *  This file is part of libTuiles
  ****************************************************************************/
 
-#ifndef DeleteTuile_h
-#define DeleteTuile_h
+#ifndef ProcDeleteTuile_h
+#define ProcDeleteTuile_h
 
 #include "Command.hpp"
 #include "TuilesManager.hpp"
 
 namespace tuiles {
 
-class DeleteTuile: public Command {	
+class ProcDeleteTuile: public Command {	
 	public:
-		inline DeleteTuile(){m_name="DeleteTuile";}
-		inline virtual ~DeleteTuile(){};
+		inline ProcDeleteTuile(){m_name="ProcDeleteTuile";}
+		inline virtual ~ProcDeleteTuile(){};
 		virtual void run() {
-            TuilesManager::getInstance()->internalDeleteTuile(m_tuile);
+            m_tuile->confirmDelete();
         }
         virtual void createClones(const unsigned int& nbClones) {
             for(unsigned int c=0; c<nbClones; ++c) {
-                m_clones.push_back(new DeleteTuile());
+                m_clones.push_back(new ProcDeleteTuile());
                 m_clones.back()->setModel(this);
             }
         }

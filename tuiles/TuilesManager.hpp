@@ -31,7 +31,6 @@ class UpdatePlayPosition;
 class ClearTreesAsk;
 class ClearTreesConfirm;
 class DeleteTuile;
-class ProcDeleteTuile;
 
 class TuilesManager: public OpTuile {	
 	public:
@@ -52,6 +51,11 @@ class TuilesManager: public OpTuile {
         /*!Completely removes the tuile and its children if any
         */
         virtual void deleteTuile(Tuile* tuile);
+
+        /*!Completely removes the tuile and its children if any
+        * and parent tuiles in order to ensure a complete tree
+        */
+        virtual void extractTuile(Tuile* tuile);
 
         /*!Get position of the child
         */
@@ -101,7 +105,9 @@ class TuilesManager: public OpTuile {
 		TuilesManager();
 		Tuile* getTuile(const unsigned int& id);
         void internalAddTuile(Tuile*);
-        void internalDeleteTuile(Tuile*);
+        inline void markTuileForDelete(Tuile* tui) { 
+            m_deletingTuiles.push_back(tui);
+        }
 
         virtual void procClearTrees();
         virtual void confirmClearTrees();
@@ -127,10 +133,10 @@ class TuilesManager: public OpTuile {
         
         unsigned int m_idCounter;
         std::map<unsigned int, Tuile*> m_tuilesMap;
+        std::vector<Tuile*> m_deletingTuiles;
         StartTrees* m_protoStartTrees;
         StopTrees* m_protoStopTrees;
         ClearTreesAsk* m_protoClearTreesAsk;
-        DeleteTuile* m_protoDeleteTuile;
 
         //Proc variables
         Voice m_procVoice;

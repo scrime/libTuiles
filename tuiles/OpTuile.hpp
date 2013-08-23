@@ -27,7 +27,6 @@ class OpTuile: public Tuile {
         const std::vector<Tuile*>& getChildren(){return m_children;}
         void removeChild(Tuile*);
         void replaceChild(Tuile* replacedChild, Tuile* replacingChild);
-        virtual void deleteChild(Tuile*);
         void recursiveDelete();
 
         void setActive(bool active);

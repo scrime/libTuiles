@@ -169,6 +169,14 @@ void TuilesManager::update() {
     //handle commands
     m_commandsFromProc->runCommands();
     m_commandsToProc->cleanCommands();
+
+    //handle tuiles delete
+    vector<Tuile*>::iterator itTui=m_deletingTuiles.begin();
+    for(; itTui!=m_deletingTuiles.end(); ++itTui) {
+        m_tuilesMap.erase((*itTui)->getID());
+        delete (*itTui);
+    }
+    m_deletingTuiles.clear();
 }
 
 Tuile* TuilesManager::getTuile(const unsigned int& id) {
@@ -231,7 +239,11 @@ void TuilesManager::insertSeq(SeqTuile* seq, Tuile* t1, Tuile* t2) {
 }
 
 void TuilesManager::deleteTuile(Tuile* tuile) {
-    tuile->getParent()->deleteChild(tuile);
+    tuile->askDelete();
+}
+
+void TuilesManager::extractTuile(Tuile* tuile) {
+
 }
 
 void TuilesManager::clearTrees() {
@@ -273,11 +285,6 @@ void TuilesManager::internalAddTuile(Tuile* tuile) {
     updateProcChildren();
 
     m_idCounter++;
-}
-
-void TuilesManager::internalDeleteTuile(Tuile* tuile) {
-    m_tuilesMap.erase(tuile->getID());
-    delete tuile;
 }
 
 void TuilesManager::printTrees() {

@@ -17,6 +17,7 @@
 #include "commands/SetProcParent.hpp"
 #include "commands/UpdateTuilePosition.hpp"
 #include "commands/DeleteTuile.hpp"
+#include "commands/ProcDeleteTuile.hpp"
 
 using namespace std;
 
@@ -33,22 +34,45 @@ Tuile::Tuile(): m_active(false), m_muted(false),
     m_protoSetProcParent->createClones(m_nbCommands);
     m_protoUpdateTuilePos = new UpdateTuilePosition();
     m_protoUpdateTuilePos->createClones(m_nbCommands);
+    m_protoDeleteTuile = new DeleteTuile();
+    m_protoDeleteTuile->createClones(1);
+    m_protoProcDeleteTuile = new ProcDeleteTuile();
+    m_protoProcDeleteTuile->createClones(1);
 }
 
 Tuile::~Tuile() {
     delete m_protoSetProcProperties;
     delete m_protoSetProcParent;
     delete m_protoUpdateTuilePos;
+    delete m_protoDeleteTuile;
+    delete m_protoProcDeleteTuile;
 }
 
-void Tuile::recursiveDelete() {
-/*
-    DeleteTuile* com= static_cast<DeleteTuile*>(m_protoDeleteTuile->popClone());
+void Tuile::confirmDelete() {
+    DEBUG("Tuile "<<m_id<<" "<<m_name<<" confirmed delete");
+    DeleteTuile* com = static_cast<DeleteTuile*>(
+                                        m_protoDeleteTuile->popClone());
     if(com) {    
         com->setTuile(this);
         m_commandsToProc->runCommand(com);
     }
-*/
+}
+
+void Tuile::askDelete() {
+    DEBUG("Tuile "<<m_id<<" "<<m_name<<" asked delete");
+    if(m_parent) {
+        m_parent->removeChild(this);
+    }
+    vector<Observer*>::iterator itObs = m_observers.begin();
+    for(; itObs!=m_observers.end(); ++itObs) {
+        (*itObs)->notifyDelete();
+    }
+    ProcDeleteTuile* com = static_cast<ProcDeleteTuile*>(
+                                        m_protoProcDeleteTuile->popClone());
+    if(com) {    
+        com->setTuile(this);
+        m_commandsToProc->runCommand(com);
+    }
 }
 
 void Tuile::setActive(bool active) {
@@ -131,14 +155,14 @@ void Tuile::updateProcProperties() {
 void Tuile::notifyObservers() {
     vector<Observer*>::iterator itObs = m_observers.begin();
     for(; itObs!=m_observers.end(); ++itObs) {
-        (*itObs)->notify();
+        (*itObs)->notifyUpdate();
     }
 }
 
 void Tuile::load(xmlNodePtr node) {
     char* value=NULL;
     value=NULL;
-    value = (char*)xmlGetProp(node,(xmlChar*)"m_name"); 
+    value = (char*)xmlGetProp(node,(xmlChar*)"name"); 
     if(value) {
         m_name=value;
     } 

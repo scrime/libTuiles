@@ -19,7 +19,7 @@ class DeleteTuile: public Command {
 		inline DeleteTuile(){m_name="DeleteTuile";}
 		inline virtual ~DeleteTuile(){};
 		virtual void run() {
-            TuilesManager::getInstance()->internalDeleteTuile(m_tuile);
+            TuilesManager::getInstance()->markTuileForDelete(m_tuile);
         }
         virtual void createClones(const unsigned int& nbClones) {
             for(unsigned int c=0; c<nbClones; ++c) {

@@ -17,10 +17,10 @@ class Voice {
         Voice():m_distance(0){}
         ~Voice(){}
 
-        const std::string& getID(){return m_id;}
+        const std::string& getID() const {return m_id;}
         std::string& editID(){return m_id;}
 
-        const unsigned int& getDistance(){return m_distance;}
+        const unsigned int& getDistance() const {return m_distance;} 
         unsigned int& editDistance(){return m_distance;}
 
     private:

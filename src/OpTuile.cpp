@@ -84,12 +84,6 @@ void OpTuile::updateProcChildren() {
     }
 }
 
-void OpTuile::deleteChild(Tuile* child) {
-    //remove from children
-    updateProcChildren(); 
-
-}
-
 void OpTuile::recursiveDelete() {
 /*
     for(unsigned int ind=0; ind<m_children.size(); ++ind) {

@@ -64,7 +64,9 @@ void LoopTuile::processPos(const float& pos, const Voice& voice) {
         //TODO take polyphony into account
 
         //process previous instances
-        Voice newVoice = voice;
+        Voice newVoice;
+        newVoice.editID()=voice.getID();
+        newVoice.editDistance()=voice.getDistance();
         while(loopPos<m_children[0]->getLength()) {
             newVoice.editID()+="L";
             newVoice.editDistance()+=1;
@@ -72,7 +74,8 @@ void LoopTuile::processPos(const float& pos, const Voice& voice) {
             loopPos+=m_children[0]->m_procSyncSize;
         }
         //process next instances
-        newVoice = voice;
+        newVoice.editID()=voice.getID();
+        newVoice.editDistance()=voice.getDistance();
         loopPos = childPos - m_children[0]->m_procSyncSize;
         while(loopPos>0) {
             newVoice.editID()+="R";
@@ -81,7 +84,8 @@ void LoopTuile::processPos(const float& pos, const Voice& voice) {
             loopPos-=m_children[0]->m_procSyncSize;
         }
         //process current instance
-        newVoice = voice;
+        newVoice.editID()=voice.getID();
+        newVoice.editDistance()=voice.getDistance();
         newVoice.editID()+="C";
         m_procChildren[0]->processPos(childPos, newVoice);
     }
