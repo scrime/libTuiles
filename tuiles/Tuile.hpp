@@ -55,12 +55,20 @@ class Tuile {
         inline const float& getSpeed(){return m_speed;}
         inline const float& getLength(){return m_length;}
         inline const float& getSyncWindowSize(){return m_syncWindowSize;}
+        inline const float& getSubdivisions(){return m_subdivisions;} 
+        inline const float& getSubEpsilon(){return m_subEpsilon;} 
         virtual void setLeftOffset(const float&);
         virtual void setRightOffset(const float&);
         virtual void setSpeed(const float& s);
         virtual void setLength(const float&);
         virtual void resyncLeft();
         virtual void resyncRight();
+        inline virtual void setSubdivisions(const float& sub) { 
+            if(sub>=1) {m_subdivisions=sub;}
+        } 
+        inline virtual void setSubEpsilon(const float& subeps) { 
+            if(subeps>=0) {m_subEpsilon=subeps;}
+        } 
 
 		//process
         void processPosDiff(const float& posDiff);
@@ -126,6 +134,8 @@ class Tuile {
         float m_leftOffset;
         float m_rightOffset;
         float m_absolutePosition;
+        float m_subdivisions;
+        float m_subEpsilon;
 
         OpTuile* m_parent;
 

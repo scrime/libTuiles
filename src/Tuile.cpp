@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <cmath>
 
 #include "OpTuile.hpp"
 
@@ -25,8 +26,9 @@ namespace tuiles {
 
 Tuile::Tuile(): m_active(false), m_muted(false),
                 m_position(0), m_speed(1), m_length(1),
-                m_leftOffset(0), m_rightOffset(0), m_parent(NULL), 
-                m_nbCommands(10) {
+                m_leftOffset(0), m_rightOffset(0), 
+                m_subdivisions(1), m_subEpsilon(0), 
+                m_parent(NULL), m_nbCommands(10) {
     
     m_protoSetProcProperties = new SetProcProperties();
     m_protoSetProcProperties->createClones(m_nbCommands);
@@ -88,14 +90,26 @@ void Tuile::mute() {
 
 void Tuile::setLeftOffset(const float& lo) {
     if(lo+m_rightOffset<m_length) {
-        m_leftOffset=lo;
+        if(fabs(fmod(lo, m_length/m_subdivisions))<m_subEpsilon) {
+            m_leftOffset=
+                int(lo/(m_length/m_subdivisions))*m_length/m_subdivisions;
+        }
+        else {
+            m_leftOffset=lo;
+        }
         updateWindows();
     }
 }
 
 void Tuile::setRightOffset(const float& ro) {
     if(m_leftOffset+ro<m_length) {
-        m_rightOffset=ro;
+        if(fabs(fmod(ro, m_length/m_subdivisions))<m_subEpsilon) {
+            m_rightOffset=
+                int(ro/(m_length/m_subdivisions))*m_length/m_subdivisions;
+        }
+        else {
+            m_rightOffset=ro;
+        }
         updateWindows();
     }
 }
