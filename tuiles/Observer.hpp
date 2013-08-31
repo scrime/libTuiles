@@ -12,7 +12,6 @@ namespace tuiles {
 
 class Observer {	
 	public:
-		Observer(){}
 		virtual ~Observer(){}
 		virtual void notifyUpdate()=0;
         virtual void notifyDelete()=0;

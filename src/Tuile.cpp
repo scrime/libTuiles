@@ -50,16 +50,6 @@ Tuile::~Tuile() {
     delete m_protoProcDeleteTuile;
 }
 
-void Tuile::confirmDelete() {
-    DEBUG("Tuile "<<m_id<<" "<<m_name<<" confirmed delete");
-    DeleteTuile* com = static_cast<DeleteTuile*>(
-                                        m_protoDeleteTuile->popClone());
-    if(com) {    
-        com->setTuile(this);
-        m_commandsToProc->runCommand(com);
-    }
-}
-
 void Tuile::askDelete() {
     DEBUG("Tuile "<<m_id<<" "<<m_name<<" asked delete");
     if(m_parent) {
@@ -69,8 +59,19 @@ void Tuile::askDelete() {
     for(; itObs!=m_observers.end(); ++itObs) {
         (*itObs)->notifyDelete();
     }
+    m_observers.clear();
     ProcDeleteTuile* com = static_cast<ProcDeleteTuile*>(
                                         m_protoProcDeleteTuile->popClone());
+    if(com) {    
+        com->setTuile(this);
+        m_commandsToProc->runCommand(com);
+    }
+}
+
+void Tuile::confirmDelete() {
+    DEBUG("Tuile "<<m_id<<" "<<m_name<<" confirmed delete");
+    DeleteTuile* com = static_cast<DeleteTuile*>(
+                                        m_protoDeleteTuile->popClone());
     if(com) {    
         com->setTuile(this);
         m_commandsToProc->runCommand(com);
@@ -174,6 +175,7 @@ void Tuile::notifyObservers() {
 }
 
 void Tuile::load(xmlNodePtr node) {
+    DEBUG("Loading tuile "<<m_id);
     char* value=NULL;
     value=NULL;
     value = (char*)xmlGetProp(node,(xmlChar*)"name"); 

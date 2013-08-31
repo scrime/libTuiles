@@ -35,7 +35,7 @@ class DeleteTuile;
 class TuilesManager: public OpTuile {	
 	public:
 		static TuilesManager* getInstance();
-		~TuilesManager();
+		virtual ~TuilesManager();
 
         virtual Tuile* createAndAddTuile(const std::string& type);
         virtual void addLeaf(LeafTuile*);

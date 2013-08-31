@@ -276,6 +276,7 @@ void TuilesManager::confirmClearTrees() {
 }
 
 void TuilesManager::internalAddTuile(Tuile* tuile) {
+    m_idCounter++;
     tuile->setID(m_idCounter);
     tuile->setCommandHandlers(m_commandsToProc, m_commandsFromProc);
     tuile->setParent(this);
@@ -284,12 +285,18 @@ void TuilesManager::internalAddTuile(Tuile* tuile) {
     m_tuilesMap[m_idCounter]=tuile;
     updateProcChildren();
 
-    m_idCounter++;
 }
 
 void TuilesManager::printTrees() {
     cout<<"TuilesManager: printing trees"<<endl;
     print(" ");
+    
+    cout<<"TuilesManager: printing map"<<endl;
+    map<unsigned int, Tuile*>::iterator itChild=m_tuilesMap.begin();
+    for(; itChild!=m_tuilesMap.end(); ++itChild) {
+        cout<<"Tuile : "<<itChild->second->getID()
+            <<" "<<itChild->second->getID()<<endl;
+    }
 }
 
 void TuilesManager::print(const std::string& prefix) {
