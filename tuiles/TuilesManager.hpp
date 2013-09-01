@@ -90,6 +90,10 @@ class TuilesManager: public OpTuile {
         */ 
         void printTrees();
 
+        /*!Gets the currentID counter
+        */
+        const unsigned int& getTuileIDCounter(){return m_idCounter;}
+
         /*!Process the trees
         *  Advance in the trees by posDiff 
         *  Can be called in a different (possibly real-time) thread
