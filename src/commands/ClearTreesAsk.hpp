@@ -15,7 +15,7 @@ namespace tuiles {
 
 class ClearTreesAsk: public Command {	
 	public:
-		inline ClearTreesAsk(){m_name="ClearTreesAsk";}
+		inline ClearTreesAsk():Command(){m_name="ClearTreesAsk";}
 		inline virtual ~ClearTreesAsk(){};
 		virtual void run() {
             m_manager->procClearTrees();

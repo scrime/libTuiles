@@ -41,7 +41,8 @@ void CommandsHandler::runCommands() {
         jack_ringbuffer_read(m_runRingBuffer, 
                                 (char*)&newCommand, m_commandSize);
         newCommand->run();
-        if(jack_ringbuffer_write_space(m_cleanRingBuffer)>m_commandSize) {
+        if(newCommand->isCleanable() &&
+                jack_ringbuffer_write_space(m_cleanRingBuffer)>m_commandSize) {
             jack_ringbuffer_write(m_cleanRingBuffer, 
                                     (char* )&newCommand, m_commandSize);
         }

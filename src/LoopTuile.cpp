@@ -101,5 +101,10 @@ float LoopTuile::procGetChildPositionAtPos(const unsigned int& child,
     return pos;
 }
 
+void LoopTuile::extractChild(Tuile* child) {
+    child->askDelete();
+    m_parent->extractChild(this);
+}
+
 }
 

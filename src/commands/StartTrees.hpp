@@ -15,7 +15,7 @@ namespace tuiles {
 
 class StartTrees: public Command {	
 	public:
-		inline StartTrees(){m_name="StartTrees";}
+		inline StartTrees():Command(){m_name="StartTrees";}
 		inline virtual ~StartTrees(){};
 		virtual void run() {
             m_manager->m_procPlaying=true;

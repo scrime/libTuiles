@@ -16,10 +16,10 @@ namespace tuiles {
 
 class DeleteTuile: public Command {	
 	public:
-		inline DeleteTuile(){m_name="DeleteTuile";}
+		inline DeleteTuile():Command(){m_name="DeleteTuile";m_cleanable=false;}
 		inline virtual ~DeleteTuile(){};
 		virtual void run() {
-            TuilesManager::getInstance()->markTuileForDelete(m_tuile);
+            m_manager->markTuileForDelete(m_tuile);
         }
         virtual void createClones(const unsigned int& nbClones) {
             for(unsigned int c=0; c<nbClones; ++c) {
@@ -28,9 +28,11 @@ class DeleteTuile: public Command {
             }
         }
         inline void setTuile(Tuile* tuile){m_tuile=tuile;}
+        inline void setManager(TuilesManager* man){m_manager=man;}
 
 	protected:
         Tuile* m_tuile;
+        TuilesManager* m_manager;
 };
 
 }

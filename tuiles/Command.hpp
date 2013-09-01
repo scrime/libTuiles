@@ -21,16 +21,20 @@ class Command {
 
 		virtual void run()=0;
 		void clean();
+        inline bool isCleanable(){return m_cleanable;}
 
         virtual void createClones(const unsigned int& nbClones)=0;
         inline void setModel(Command* com){m_model=com;}
         Command* popClone();
 
+    protected:
+        void pushClone(Command*);
+
 	protected:
         std::string m_name;
         std::list<Command*> m_clones;
         Command* m_model;
-        void pushClone(Command*);
+        bool m_cleanable;
 };
 
 }

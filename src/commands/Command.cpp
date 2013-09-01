@@ -13,7 +13,7 @@ using namespace std;
 
 namespace tuiles {
 
-Command::Command() {}
+Command::Command(): m_cleanable(true) {}
 
 Command::~Command() {
     list<Command*>::iterator itCom=m_clones.begin();

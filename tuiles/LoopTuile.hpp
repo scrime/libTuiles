@@ -22,6 +22,7 @@ class LoopTuile: public OpTuile {
         void setChild(Tuile*);
         float getChildPositionAtPos(const unsigned int& child, 
                                     const float& pos);
+        void extractChild(Tuile* child);
 		void updateWindows();
         void print(const std::string&);
 

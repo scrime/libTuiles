@@ -20,7 +20,6 @@ namespace tuiles {
 
 class TuilesManager;
 class OpTuile;
-
 class CommandsHandler;
 class SetProcProperties;
 class SetProcParent;
@@ -32,7 +31,7 @@ class Tuile {
     public:
         Tuile();
         virtual ~Tuile();
-        void askDelete();
+        virtual void askDelete();
 
 		//id and name
         inline void setID(const unsigned int& id){m_id=id;}
@@ -93,6 +92,10 @@ class Tuile {
         inline CommandsHandler* getCommandsFromProc() {
             return m_commandsFromProc;
         }
+    
+        //Manager
+        //FIXME there should be a better way of doing this
+        inline void setManager(TuilesManager* tm){m_manager=tm;}
 
         //observers
         inline void addObserver(Observer* obs){m_observers.push_back(obs);}
@@ -157,6 +160,7 @@ class Tuile {
         CommandsHandler* m_commandsToProc;
         CommandsHandler* m_commandsFromProc;
         friend class TuilesManager;
+        TuilesManager* m_manager;
 
         friend class SeqTuile;
         friend class LoopTuile;

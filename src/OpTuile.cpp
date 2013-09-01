@@ -27,6 +27,13 @@ OpTuile::~OpTuile() {
     delete m_protoSetProcChildren;
 }
 
+void OpTuile::askDelete() {
+    for(unsigned int ind=0; ind<m_children.size(); ++ind) {
+        m_children[ind]->askDelete();
+    }
+    Tuile::askDelete();
+}
+
 void OpTuile::setActive(bool active) {
     DEBUG("OpTuile setactive "<<active);
     Tuile::setActive(active);
@@ -84,15 +91,8 @@ void OpTuile::updateProcChildren() {
     }
 }
 
-void OpTuile::recursiveDelete() {
-/*
-    for(unsigned int ind=0; ind<m_children.size(); ++ind) {
-        if(m_children[ind]->getID()==replacedChild->getID()) {
-            
-            
-        }
-    }
-*/
+void OpTuile::extractChild(Tuile* child) {
+    child->askDelete();
 }
 
 }

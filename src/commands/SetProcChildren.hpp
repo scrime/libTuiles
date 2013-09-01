@@ -15,7 +15,7 @@ namespace tuiles {
 
 class SetProcChildren: public Command {	
 	public:
-		inline SetProcChildren(){m_name="SetProcChildren";}
+		inline SetProcChildren():Command(){m_name="SetProcChildren";}
 		inline virtual ~SetProcChildren(){};
 		virtual void run() {
             m_parent->m_procChildren.assign(m_children.begin(), 

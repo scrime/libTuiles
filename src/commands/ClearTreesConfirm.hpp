@@ -15,7 +15,7 @@ namespace tuiles {
 
 class ClearTreesConfirm: public Command {	
 	public:
-		inline ClearTreesConfirm(){m_name="ClearTreesConfirm";}
+		inline ClearTreesConfirm():Command(){m_name="ClearTreesConfirm";}
 		inline virtual ~ClearTreesConfirm(){};
 		virtual void run() {
             m_manager->confirmClearTrees();

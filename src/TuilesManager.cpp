@@ -169,9 +169,8 @@ void TuilesManager::update() {
     //handle commands
     m_commandsFromProc->runCommands();
     m_commandsToProc->cleanCommands();
-
-    //handle tuiles delete
-    vector<Tuile*>::iterator itTui=m_deletingTuiles.begin();
+    //delete tuiles
+    vector<Tuile*>::iterator itTui = m_deletingTuiles.begin();
     for(; itTui!=m_deletingTuiles.end(); ++itTui) {
         m_tuilesMap.erase((*itTui)->getID());
         delete (*itTui);
@@ -243,7 +242,7 @@ void TuilesManager::deleteTuile(Tuile* tuile) {
 }
 
 void TuilesManager::extractTuile(Tuile* tuile) {
-
+    tuile->getParent()->extractChild(tuile);
 }
 
 void TuilesManager::clearTrees() {
@@ -280,12 +279,13 @@ void TuilesManager::internalAddTuile(Tuile* tuile) {
     tuile->setID(m_idCounter);
     tuile->setCommandHandlers(m_commandsToProc, m_commandsFromProc);
     tuile->setParent(this);
+    tuile->setManager(this);
 
     m_children.push_back(tuile);
     m_tuilesMap[m_idCounter]=tuile;
     updateProcChildren();
-
 }
+
 
 void TuilesManager::printTrees() {
     cout<<"TuilesManager: printing trees"<<endl;

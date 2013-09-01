@@ -20,16 +20,18 @@ class OpTuile: public Tuile {
     public:
         OpTuile();
         virtual ~OpTuile();
-        virtual float getChildPositionAtPos(const unsigned int& child, 
-                                            const float& pos)=0;
+        virtual void askDelete();
+
+        void setActive(bool active);
+
 		//children
         unsigned int getNbChildren(){return m_children.size();}
         const std::vector<Tuile*>& getChildren(){return m_children;}
-        void removeChild(Tuile*);
+        virtual void removeChild(Tuile*);
         void replaceChild(Tuile* replacedChild, Tuile* replacingChild);
-        void recursiveDelete();
-
-        void setActive(bool active);
+        virtual void extractChild(Tuile*);
+        virtual float getChildPositionAtPos(const unsigned int& child, 
+                                            const float& pos)=0;
 
     protected: 
         void setChildAtPos(const unsigned int&, Tuile* child);

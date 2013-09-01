@@ -45,6 +45,21 @@ void SeqTuile::setSecondChild(Tuile* child) {
     setChildAtPos(1, child);
 }
 
+void SeqTuile::extractChild(Tuile* child) {
+    if(m_children.size()>1) {
+        if(m_children[0]->getID()==child->getID()) {
+            m_parent->replaceChild(this, m_children[1]);
+            m_children[0]->askDelete();
+            Tuile::askDelete();
+        }
+        else if(m_children[1]->getID()==child->getID()) {
+            m_parent->replaceChild(this, m_children[0]);
+            m_children[1]->askDelete();
+            Tuile::askDelete();
+        }
+    }
+}
+
 void SeqTuile::print(const std::string& prefix) {
     cout<<prefix<<"seq "<<m_id<<" "<<m_name<<endl;
 	vector<Tuile*>::iterator itChild = m_children.begin();

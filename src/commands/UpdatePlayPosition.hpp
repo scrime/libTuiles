@@ -15,7 +15,7 @@ namespace tuiles {
 
 class UpdatePlayPosition: public Command {	
 	public:
-		inline UpdatePlayPosition(){m_name="UpdatePlayPosition";}
+		inline UpdatePlayPosition():Command(){m_name="UpdatePlayPosition";}
 		inline virtual ~UpdatePlayPosition(){};
 		virtual void run() {
             m_manager->m_playingPos=m_playingPos;

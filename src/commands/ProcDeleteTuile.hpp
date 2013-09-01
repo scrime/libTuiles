@@ -16,7 +16,7 @@ namespace tuiles {
 
 class ProcDeleteTuile: public Command {	
 	public:
-		inline ProcDeleteTuile(){m_name="ProcDeleteTuile";}
+		inline ProcDeleteTuile():Command(){m_name="ProcDeleteTuile";}
 		inline virtual ~ProcDeleteTuile(){};
 		virtual void run() {
             m_tuile->confirmDelete();

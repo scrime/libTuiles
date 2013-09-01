@@ -29,7 +29,6 @@ Tuile::Tuile(): m_active(false), m_muted(false),
                 m_leftOffset(0), m_rightOffset(0), 
                 m_subdivisions(1), m_subEpsilon(0), 
                 m_parent(NULL), m_nbCommands(10) {
-    
     m_protoSetProcProperties = new SetProcProperties();
     m_protoSetProcProperties->createClones(m_nbCommands);
     m_protoSetProcParent = new SetProcParent();
@@ -37,9 +36,9 @@ Tuile::Tuile(): m_active(false), m_muted(false),
     m_protoUpdateTuilePos = new UpdateTuilePosition();
     m_protoUpdateTuilePos->createClones(m_nbCommands);
     m_protoDeleteTuile = new DeleteTuile();
-    m_protoDeleteTuile->createClones(1);
+    m_protoDeleteTuile->createClones(m_nbCommands);
     m_protoProcDeleteTuile = new ProcDeleteTuile();
-    m_protoProcDeleteTuile->createClones(1);
+    m_protoProcDeleteTuile->createClones(m_nbCommands);
 }
 
 Tuile::~Tuile() {
@@ -69,12 +68,13 @@ void Tuile::askDelete() {
 }
 
 void Tuile::confirmDelete() {
-    DEBUG("Tuile "<<m_id<<" "<<m_name<<" confirmed delete");
     DeleteTuile* com = static_cast<DeleteTuile*>(
                                         m_protoDeleteTuile->popClone());
     if(com) {    
+        DEBUG("Tuile "<<m_id<<" "<<m_name<<" confirmed delete");
         com->setTuile(this);
-        m_commandsToProc->runCommand(com);
+        com->setManager(m_manager);
+        m_commandsFromProc->runCommand(com);
     }
 }
 

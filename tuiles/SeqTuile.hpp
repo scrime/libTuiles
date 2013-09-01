@@ -24,7 +24,7 @@ class SeqTuile: public OpTuile {
         float getChildPositionAtPos(const unsigned int& child, 
                                     const float& pos);
         virtual void print(const std::string&);
-
+        virtual void extractChild(Tuile*);
 
         void processPos(const float& pos, const Voice& voice);
 		void updateWindows();
