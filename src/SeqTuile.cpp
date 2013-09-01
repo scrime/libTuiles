@@ -50,12 +50,12 @@ void SeqTuile::extractChild(Tuile* child) {
         if(m_children[0]->getID()==child->getID()) {
             m_parent->replaceChild(this, m_children[1]);
             m_children[0]->askDelete();
-            Tuile::askDelete();
+            askDelete();
         }
         else if(m_children[1]->getID()==child->getID()) {
             m_parent->replaceChild(this, m_children[0]);
             m_children[1]->askDelete();
-            Tuile::askDelete();
+            askDelete();
         }
     }
 }

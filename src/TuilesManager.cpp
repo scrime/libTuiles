@@ -159,7 +159,6 @@ void TuilesManager::processTrees(const float& posDiff) {
         }
         m_procPlayingPos+=posDiff;
     }
-
     //handle commands
     m_commandsToProc->runCommands();
     m_commandsFromProc->cleanCommands();
