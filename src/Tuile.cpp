@@ -36,17 +36,17 @@ Tuile::Tuile(): m_active(false), m_muted(false),
     m_protoUpdateTuilePos = new UpdateTuilePosition();
     m_protoUpdateTuilePos->createClones(m_nbCommands);
     m_protoDeleteTuile = new DeleteTuile();
-    m_protoDeleteTuile->createClones(m_nbCommands);
+    m_protoDeleteTuile->createClones(1);
     m_protoProcDeleteTuile = new ProcDeleteTuile();
-    m_protoProcDeleteTuile->createClones(m_nbCommands);
+    m_protoProcDeleteTuile->createClones(1);
 }
 
 Tuile::~Tuile() {
     delete m_protoSetProcProperties;
     delete m_protoSetProcParent;
     delete m_protoUpdateTuilePos;
-    delete m_protoDeleteTuile;
     delete m_protoProcDeleteTuile;
+    delete m_protoDeleteTuile;
 }
 
 void Tuile::askDelete() {
@@ -91,6 +91,13 @@ void Tuile::mute() {
 
 void Tuile::setLeftOffset(const float& lo) {
     if(lo+m_rightOffset<m_length) {
+        m_leftOffset=lo;
+        updateWindows();
+    }
+}
+
+void Tuile::setSubdivisedLeftOffset(const float& lo) {
+    if(lo+m_rightOffset<m_length) {
         if(fabs(fmod(lo, m_length/m_subdivisions))<m_subEpsilon) {
             m_leftOffset=
                 int(lo/(m_length/m_subdivisions))*m_length/m_subdivisions;
@@ -101,8 +108,14 @@ void Tuile::setLeftOffset(const float& lo) {
         updateWindows();
     }
 }
-
 void Tuile::setRightOffset(const float& ro) {
+    if(m_leftOffset+ro<m_length) {
+        m_rightOffset=ro;
+        updateWindows();
+    }
+}
+
+void Tuile::setSubdivisedRightOffset(const float& ro) {
     if(m_leftOffset+ro<m_length) {
         if(fabs(fmod(ro, m_length/m_subdivisions))<m_subEpsilon) {
             m_rightOffset=

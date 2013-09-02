@@ -37,7 +37,10 @@ class Tuile {
         inline void setID(const unsigned int& id){m_id=id;}
         inline const unsigned int& getID(){return m_id;}
 		inline const std::string& getName(){return m_name;}
-		inline void setName(const std::string& name){m_name=name;}
+		inline void setName(const std::string& name) { 
+            m_name=name;
+            notifyObservers();
+        }
 
 		//activation
         virtual void setActive(bool active);
@@ -58,6 +61,8 @@ class Tuile {
         inline const float& getSubEpsilon(){return m_subEpsilon;} 
         virtual void setLeftOffset(const float&);
         virtual void setRightOffset(const float&);
+        virtual void setSubdivisedLeftOffset(const float&);
+        virtual void setSubdivisedRightOffset(const float&);
         virtual void setSpeed(const float& s);
         virtual void setLength(const float&);
         virtual void resyncLeft();
