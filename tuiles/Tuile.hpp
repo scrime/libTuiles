@@ -126,8 +126,8 @@ class Tuile {
         void confirmDelete();
 
         //defined by derived classes in order to work as callbacks
-        inline virtual void activate(){}
-        inline virtual void deactivate(){}
+        inline virtual void activate(const Voice&){}
+        inline virtual void deactivate(const Voice&){}
 
     protected:
 		unsigned int m_id;

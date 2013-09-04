@@ -245,13 +245,15 @@ void Tuile::processPos(const float& pos, const Voice& voice) {
         m_procPosition=pos*m_speed;
         if(m_procPosition>=0 && m_procPosition<m_length && !m_procActive) {
             m_procActive=true;
-            activate();
-            DEBUG("Activate tuile "<<m_id<<" "<<m_name);
+            activate(Voice());
+            DEBUG("Activate tuile "<<m_id<<" "<<m_name
+                                    <<", voice "<<voice.getID());
         }
         if((m_procPosition<0 || m_procPosition>=m_length) && m_procActive) {
             m_procActive=false;
-            deactivate();
-            DEBUG("Deactivate tuile "<<m_id<<" "<<m_name);
+            deactivate(Voice());
+            DEBUG("Deactivate tuile "<<m_id<<" "<<m_name
+                                    <<", voice "<<voice.getID());
         }
         UpdateTuilePosition* com = static_cast<UpdateTuilePosition*>(
                                         m_protoUpdateTuilePos->popClone());

@@ -48,20 +48,16 @@ void LoopTuile::print(const std::string& prefix) {
 void LoopTuile::processPos(const float& pos, const Voice& voice) {
     Tuile::processPos(pos, voice);
     if(m_procChildren.size()>0) {
-        //read within sync window
-        if(pos>m_procLength-m_procRightOffset) { 
-            m_procPosition=m_procLeftOffset;
-        }else {
-            m_procPosition=pos;
-        }
+        m_procPosition=pos;
 
-        float childPos = fmod(m_position-m_procLeftOffset, 
+        float childPos = fmod(m_procPosition-m_procLeftOffset, 
                                 m_procSyncSize)
                        + m_procLeftOffset;
-     
+
         float loopPos = childPos + m_children[0]->m_procSyncSize;
 
         //TODO take polyphony into account
+        //FIXME should be able to activate/deactivate the various voices
 
         //process previous instances
         Voice newVoice;
