@@ -49,41 +49,39 @@ void LoopTuile::processPos(const float& pos, const Voice& voice) {
     Tuile::processPos(pos, voice);
     if(m_procChildren.size()>0) {
         m_procPosition=pos;
-        if(m_procPosition>=0) {
-            float childPos = fmod(m_procPosition-m_procLeftOffset, 
-                                    m_procSyncSize)
-                           + m_procLeftOffset;
+        float childPos = fmod(m_procPosition-m_procLeftOffset, 
+                                m_procSyncSize)
+                       + m_procLeftOffset;
 
-            //TODO take polyphony into account
-            //FIXME should be able to activate/deactivate the various voices
-
-            //process previous instances
-            Voice newVoice;
-            newVoice.editID()=voice.getID();
-            newVoice.editDistance()=voice.getDistance();
-            float loopPos = childPos + m_children[0]->m_procSyncSize;
-            while(loopPos<m_children[0]->getLength()) {
-                newVoice.editID()+="L";
-                newVoice.editDistance()+=1;
-                m_children[0]->processPos(loopPos, newVoice);
-                loopPos+=m_children[0]->m_procSyncSize;
-            }
-            //process next instances
-            newVoice.editID()=voice.getID();
-            newVoice.editDistance()=voice.getDistance();
-            loopPos = childPos - m_children[0]->m_procSyncSize;
-            while(loopPos>0) {
-                newVoice.editID()+="R";
-                newVoice.editDistance()+=1;
-                m_children[0]->processPos(loopPos, newVoice);
-                loopPos-=m_children[0]->m_procSyncSize;
-            }
-            //process current instance
-            newVoice.editID()=voice.getID();
-            newVoice.editDistance()=voice.getDistance();
-            newVoice.editID()+="C";
-            m_procChildren[0]->processPos(childPos, newVoice);
+        //TODO take polyphony into account
+        //FIXME should be able to activate/deactivate the various voices
+        Voice newVoice;
+        //process previous instances
+        newVoice.editID()=voice.getID();
+        newVoice.editDistance()=voice.getDistance();
+        float loopPos = childPos + m_children[0]->m_procSyncSize;
+        while(loopPos<m_children[0]->getLength() 
+                && m_procPosition>m_children[0]->m_procSyncSize) {
+            newVoice.editID()+="L";
+            newVoice.editDistance()+=1;
+            m_children[0]->processPos(loopPos, newVoice);
+            loopPos+=m_children[0]->m_procSyncSize;
         }
+        //process next instances
+        newVoice.editID()=voice.getID();
+        newVoice.editDistance()=voice.getDistance();
+        loopPos = childPos - m_children[0]->m_procSyncSize;
+        while(loopPos>0) {
+            newVoice.editID()+="R";
+            newVoice.editDistance()+=1;
+            m_children[0]->processPos(loopPos, newVoice);
+            loopPos-=m_children[0]->m_procSyncSize;
+        }
+        //process current instance
+        newVoice.editID()=voice.getID();
+        newVoice.editDistance()=voice.getDistance();
+        newVoice.editID()+="C";
+        m_procChildren[0]->processPos(childPos, newVoice);
     }
 }
 
